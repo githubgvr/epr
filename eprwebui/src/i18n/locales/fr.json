@@ -1,0 +1,58 @@
+{
+  "app_title": "EPR Vault",
+  "welcome_to_epr_vault": "Bienvenue dans EPR Vault",
+  "select_module_to_continue": "Sélectionnez un module pour continuer",
+  "login": "Connexion",
+  "logout": "Déconnexion",
+  "username": "Nom d'utilisateur",
+  "password": "Mot de passe",
+  "email": "Email",
+  "dashboard": "Tableau de bord",
+  "modules": {
+    "epr": "EPR",
+    "producer": "Producteur",
+    "recycler": "Recycleur",
+    "compliance": "Conformité",
+    "admin": "Administrateur"
+  },
+  "navigation": {
+    "dashboard": "Tableau de bord",
+    "organization_setup": "Configuration de l'organisation",
+    "company_profile": "Profil de l'entreprise",
+    "product_management": "Gestion des produits",
+    "vendor_linking": "Lier les produits aux fournisseurs",
+    "compliance_monitoring": "Surveillance de la conformité",
+    "data_submission": "Soumission de données",
+    "recycling_details": "Détails du recyclage",
+    "certifications": "Certifications",
+    "tracking_targets": "Suivi des objectifs",
+    "reports": "Rapports",
+    "settings": "Paramètres",
+    "user_management": "Gestion des utilisateurs"
+  },
+  "actions": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "submit": "Soumettre",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "import": "Importer"
+  },
+  "common": {
+    "name": "Nom",
+    "description": "Description",
+    "status": "Statut",
+    "created_date": "Date de création",
+    "updated_date": "Date de mise à jour",
+    "active": "Actif",
+    "inactive": "Inactif",
+    "loading": "Chargement...",
+    "no_data": "Aucune donnée disponible",
+    "error": "Erreur",
+    "success": "Succès"
+  }
+}

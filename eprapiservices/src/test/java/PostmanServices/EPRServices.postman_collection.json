@@ -1,0 +1,1250 @@
+{
+	"info": {
+		"_postman_id": "68d84496-0d39-4d0d-a1ec-eecb99e6796a",
+		"name": "EPRServices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1776594",
+		"_collection_link": "https://planetary-crescent-924864.postman.co/workspace/EPR-workspace~0ed47886-00b6-4b04-ab50-acf632c2314a/collection/1776594-68d84496-0d39-4d0d-a1ec-eecb99e6796a?action=share&source=collection_link&creator=1776594"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "getAccounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAccounts By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/accounts/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"accounts",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/accounts/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"accounts",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isActive\": true,\r\n    \"accountId\": 4,\r\n    \"accountName\": \"Account44\",\r\n    \"createdBy\": 2,\r\n    \"createdDate\": \"2025-01-01 00:00:00.0\",\r\n    \"updatedDate\": \"2028-01-01 00:00:00.0\",\r\n    \r\n    \"upDatedBy\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/accounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAccount",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isActive\": false,\r\n    \"accountId\": 3,\r\n    \"accountName\": \"Account3\",\r\n    \"createdBy\": 2,\r\n    \"createdDate\": \"2025-01-01 00:00:00.0\",\r\n    \"updatedDate\": \"2028-01-01 00:00:00.0\",    \r\n    \"upDatedBy\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/accounts/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"accounts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Industry",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/industry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getIndustry By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/industry/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Industry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"industryId\": 2,\r\n        \"industryName\": \"Setup\",\r\n        \"createdBy\": 2,\r\n        \"updatedBy\": 2,\r\n        \"createdDate\": \"2025-01-01T00:00:00\",\r\n        \"updatedDate\": \"2025-01-01T00:00:00\",\r\n        \"isActive\": true\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/industry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Industry",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"industryId\": 2,\r\n        \"industryName\": \"Setupindustry\",\r\n        \"createdBy\": 2,\r\n        \"updatedBy\": 2,\r\n        \"createdDate\": \"2025-01-01T00:00:00\",\r\n        \"updatedDate\": \"2025-01-01T00:00:00\",\r\n        \"isActive\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/industry/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrgType",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/orgtype",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"orgtype"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OrgTypeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/industry/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create OrgType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isActive\": true,\r\n    \"orgTypeId\": 2,\r\n    \"orgTypeName\": \"organization2\",\r\n    \"createdBy\": 100,\r\n    \"createdDate\": \"7/21/2025\",\r\n    \"updatedDate\": \"7/21/2025\",    \r\n    \"updatedBy\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/orgtype",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"orgtype"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update OrgType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"industryId\": 2,\r\n        \"industryName\": \"Setup industry\",\r\n        \"createdBy\": 2,\r\n        \"updatedBy\": 2,\r\n        \"createdDate\": \"2025-01-01T00:00:00\",\r\n        \"updatedDate\": \"2025-01-01T00:00:00\",\r\n        \"isActive\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/industry/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/orgtype/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"orgtype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Organization",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/organizations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OrgTypeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/industry/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create OrgType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n    \"orgId\": 2,\r\n    \"orgName\": \"organization1\",\r\n    \"orgTypeId\": \"1\",\r\n    \"createdBy\": 100,\r\n    \"createdDate\": \"7/21/2025\",\r\n    \"updatedDate\": \"7/21/2025\",    \r\n    \"updatedBy\": 100,\r\n    \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/organizations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update OrgType",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"industryId\": 2,\r\n        \"industryName\": \"Setup industry\",\r\n        \"createdBy\": 2,\r\n        \"updatedBy\": 2,\r\n        \"createdDate\": \"2025-01-01T00:00:00\",\r\n        \"updatedDate\": \"2025-01-01T00:00:00\",\r\n        \"isActive\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/industry/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"industry",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/orgtype/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"orgtype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CompanyProfiles",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/companyprofile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "COmpanyprofilebyId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/companyprofile/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyprofile",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create CompanyProfile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null,\r\n        \"createdDate\": null,\r\n        \"updatedDate\": null,\r\n        \"isActive\": null,\r\n        \"companyprofileId\": 3,\r\n        \"companyName\": \"epr India Pvt Ltd\",\r\n        \"companyRegisteredname\": \"EPR India corporation\",\r\n        \"registeredId\": \"L12345\",\r\n        \"industryId\": 1,\r\n        \"companyprofileDetails\": \"{}\",\r\n        \"orgId\": 3\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/companyprofile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CompanyProfile",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createdBy\": 1,\r\n    \"updatedBy\": 1,\r\n    \"createdDate\": \"1/1/2025\",\r\n    \"updatedDate\": \"1/1/2025\",\r\n    \"isActive\": false,\r\n    \"companyprofileId\": 3,\r\n    \"companyName\": \"epr India Pvt Ltd\",\r\n    \"companyRegisteredname\": \"EPR India \",\r\n    \"registeredId\": \"epr12345\",\r\n    \"industryId\": 1,\r\n    \"companyprofileDetails\": \"{}\",\r\n    \"orgId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/companyprofile/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyprofile",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/companyprofile/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyprofile",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/role/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"role",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1,\r\n        \"createdDate\": null,\r\n        \"updatedDate\": \"2023-01-01 00:00:00.0\",\r\n        \"isActive\": false,\r\n        \"roleid\": 102,\r\n        \"roleName\": \"Admin \",\r\n        \"accountid\": 1,\r\n        \"roleDescription\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1,\r\n        \"createdDate\": \"2023-01-01 00:00:00.0\",\r\n        \"updatedDate\": \"2023-01-01 00:00:00.0\",\r\n        \"isActive\": true,\r\n        \"roleid\": 102,\r\n        \"roleName\": \"Admin \",\r\n        \"accountid\": 1,\r\n        \"roleDescription\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/role/102",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"role",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/role/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"role",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"createdBy\": 0,\r\n        \"updatedBy\": 0,\r\n        \"createdDate\": null,\r\n        \"updatedDate\": null,\r\n        \"isActive\": false,\r\n        \"userId\": 1,\r\n        \"userName\": \"venkat\",\r\n        \"passwordHash\": \"gvrgvrgvr\",\r\n        \"firstName\": \"venkat\",\r\n        \"middleName\": \"ramana\",\r\n        \"lastName\": \"gvr\",\r\n        \"email\": \"g@g.com\",\r\n        \"mobile\": \"9741391886\",\r\n        \"nationality\": 1\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1,\r\n        \"createdDate\": \"2025-07-23\",\r\n        \"updatedDate\": \"2025-07-23\",\r\n        \"isActive\": true,\r\n        \"userId\": 1,\r\n        \"userName\": \"testuser\",\r\n        \"passwordHash\": \"passwordxxx\",\r\n        \"firstName\": \"kalayn\",\r\n        \"middleName\": \"kc\",\r\n        \"lastName\": \"Penu\",\r\n        \"email\": \"t@t.com\",\r\n        \"mobile\": 963782237,\r\n        \"nationality\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/user/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modules",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/modules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"modules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/modules/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"modules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createdBy\": 0,\r\n    \"updatedBy\": 0,\r\n    \"createdDate\": \"2025-07-23\",\r\n    \"updatedDate\":  \"2025-07-23\",\r\n    \"isActive\": true,\r\n    \"moduleId\": 1,\r\n    \"moduleName\": \"EPR Module\",\r\n    \"parentmoduleId\": null,\r\n    \"description\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/modules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"modules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1,\r\n        \"createdDate\": \"2025-07-23\",\r\n        \"updatedDate\": \"2025-07-23\",\r\n        \"isActive\": true,\r\n        \"userId\": 1,\r\n        \"userName\": \"testuser\",\r\n        \"passwordHash\": \"passwordxxx\",\r\n        \"firstName\": \"kalayn\",\r\n        \"middleName\": \"kc\",\r\n        \"lastName\": \"Penu\",\r\n        \"email\": \"t@t.com\",\r\n        \"mobile\": 963782237,\r\n        \"nationality\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/modules/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"modules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/modules/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"modules",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pages",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/pages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"pages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/pages/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createdBy\": 0,\r\n    \"updatedBy\": 0,\r\n    \"createdDate\": \"2025-07-23\",\r\n    \"updatedDate\": \"2025-07-23\",\r\n    \"isActive\": false,\r\n    \"pageId\": 1,\r\n    \"moduleId\": 2,\r\n    \"pageName\": \"Products Dashboard\",\r\n    \"urlPath\": null,\r\n    \"description\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/pages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"pages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createdBy\": 0,\r\n    \"updatedBy\": 0,\r\n    \"createdDate\": \"2025-07-23\",\r\n    \"updatedDate\": \"2025-07-23\",\r\n    \"isActive\": false,\r\n    \"pageId\": 1,\r\n    \"moduleId\": 2,\r\n    \"pageName\": \"Products Dashboard1\",\r\n    \"urlPath\": null,\r\n    \"description\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/pages/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/pages/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"pages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CompanyAccounts",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/companyaccounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyaccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/companyaccounts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyaccounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createdBy\": 1,\r\n    \"updatedBy\": 2,\r\n    \"createdDate\": \"2022-01-01 00:00:00.0\",\r\n    \"updatedDate\": \"2022-01-01 00:00:00.0\",\r\n    \"isActive\": true,\r\n    \"companyaccountsId\": 10,\r\n    \"companyprofileId\": 1,\r\n    \"accountId\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/companyaccounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyaccounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createdBy\": 1,\r\n    \"updatedBy\": 2,\r\n    \"createdDate\": \"2022-01-01 00:00:00.0\",\r\n    \"updatedDate\": \"2022-01-01 00:00:00.0\",\r\n    \"isActive\": false,\r\n    \"companyaccountsId\": 1,\r\n    \"companyprofileId\": 1,\r\n    \"accountId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/companyaccounts/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyaccounts",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/companyaccounts/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"companyaccounts",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,92 @@
+{
+  "app_title": "EPR Vault",
+  "welcome_to_epr_vault": "Welcome to EPR Vault",
+  "select_module_to_continue": "Select a module to continue",
+  "login": "Login",
+  "logout": "Logout",
+  "username": "Username",
+  "password": "Password",
+  "email": "Email",
+  "dashboard": "Dashboard",
+  "modules": {
+    "epr": "EPR",
+    "producer": "Producer",
+    "recycler": "Recycler",
+    "compliance": "Compliance",
+    "admin": "Admin"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "organization_setup": "Organization Setup",
+    "company_profile": "Company Profile",
+    "product_management": "Product Management",
+    "vendor_linking": "Link Products to Vendors",
+    "compliance_monitoring": "Monitor Compliance",
+    "data_submission": "Submit Data",
+    "recycling_details": "Log Recycling Details",
+    "certifications": "Certifications",
+    "tracking_targets": "Tracking Targets",
+    "reports": "Reports",
+    "settings": "Settings",
+    "user_management": "User Management"
+  },
+  "actions": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import"
+  },
+  "common": {
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "created_date": "Created Date",
+    "updated_date": "Updated Date",
+    "active": "Active",
+    "inactive": "Inactive",
+    "loading": "Loading...",
+    "no_data": "No data available",
+    "error": "Error",
+    "success": "Success"
+  },
+  "organization": {
+    "title": "Organization Setup",
+    "organization_name": "Organization Name",
+    "registration_number": "Registration Number",
+    "address": "Address",
+    "contact_person": "Contact Person",
+    "phone": "Phone",
+    "industry_type": "Industry Type"
+  },
+  "company_profile": {
+    "title": "Company Profile",
+    "company_name": "Company Name",
+    "registered_name": "Registered Name",
+    "registration_id": "Registration ID",
+    "industry": "Industry",
+    "details": "Details"
+  },
+  "producer": {
+    "product_management": "Product Management",
+    "product_name": "Product Name",
+    "product_category": "Product Category",
+    "vendor_name": "Vendor Name",
+    "compliance_status": "Compliance Status",
+    "submission_date": "Submission Date"
+  },
+  "recycler": {
+    "recycling_details": "Recycling Details",
+    "product_received": "Product Received",
+    "quantity": "Quantity",
+    "recycling_method": "Recycling Method",
+    "certification_type": "Certification Type",
+    "target_percentage": "Target Percentage",
+    "achieved_percentage": "Achieved Percentage"
+  }
+}
