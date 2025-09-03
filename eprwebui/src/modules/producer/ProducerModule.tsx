@@ -3,6 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import ProducerDashboard from './components/ProducerDashboard'
 import ProductManagement from './components/ProductManagement'
 import ProductCompositionManagement from './components/ProductCompositionManagement'
+import ProductGroupManagement from '../../components/product/ProductGroupManagement'
+import ProductCategoryManagement from '../../components/product/ProductCategoryManagement'
+import ProductTypeManagement from '../../components/product/ProductTypeManagement'
 import MaterialTypes from './components/MaterialTypes'
 import MaterialComponent from './components/Material'
 import MaterialManagementDashboard from './components/MaterialManagementDashboard'
@@ -14,6 +17,9 @@ const ProducerModule: React.FC = () => {
     <div className="producer-module">
       <Routes>
         <Route path="/dashboard" element={<ProducerDashboard />} />
+        <Route path="/product-groups" element={<ProductGroupManagement />} />
+        <Route path="/product-categories" element={<ProductCategoryManagement />} />
+        <Route path="/product-types" element={<ProductTypeManagement />} />
         <Route path="/products" element={<ProductManagement />} />
         <Route path="/product-compositions" element={<ProductCompositionManagement />} />
         <Route path="/material-management" element={<MaterialManagementDashboard />} />

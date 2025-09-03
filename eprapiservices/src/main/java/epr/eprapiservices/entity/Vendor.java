@@ -50,14 +50,57 @@ public class Vendor extends BaseModel {
     @Column(name = "vendorFeedback", length = 250)
     private String vendorFeedback;
 
-    // Enum for certification status
+    @Size(max = 100, message = "Contact person name must not exceed 100 characters")
+    @Column(name = "contactPerson", length = 100)
+    private String contactPerson;
+
+    @Email(message = "Contact email must be valid")
+    @Size(max = 100, message = "Contact email must not exceed 100 characters")
+    @Column(name = "contactEmail", length = 100)
+    private String contactEmail;
+
+    @Size(max = 20, message = "Contact phone must not exceed 20 characters")
+    @Column(name = "contactPhone", length = 20)
+    private String contactPhone;
+
+    @Size(max = 200, message = "Address must not exceed 200 characters")
+    @Column(name = "address", length = 200)
+    private String address;
+
+    @Size(max = 50, message = "City must not exceed 50 characters")
+    @Column(name = "city", length = 50)
+    private String city;
+
+    @Size(max = 50, message = "State must not exceed 50 characters")
+    @Column(name = "state", length = 50)
+    private String state;
+
+    @Size(max = 10, message = "Zip code must not exceed 10 characters")
+    @Column(name = "zipCode", length = 10)
+    private String zipCode;
+
+    @Size(max = 50, message = "Country must not exceed 50 characters")
+    @Column(name = "country", length = 50)
+    private String country;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vendorType")
+    private VendorType vendorType;
+
+    // Enums
     public enum CertificationStatus {
         VALID, EXPIRED
+    }
+
+    public enum VendorType {
+        RECYCLING, COLLECTION, PROCESSING, TRANSPORTATION, DISPOSAL, CONSULTING, OTHER
     }
 
     // Default constructor
     public Vendor() {
         this.vendorCertificationStatus = CertificationStatus.VALID;
+        this.vendorType = VendorType.RECYCLING;
+        this.country = "India";
     }
 
     // Constructor with required fields
@@ -132,6 +175,78 @@ public class Vendor extends BaseModel {
 
     public void setVendorFeedback(String vendorFeedback) {
         this.vendorFeedback = vendorFeedback;
+    }
+
+    public String getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public VendorType getVendorType() {
+        return vendorType;
+    }
+
+    public void setVendorType(VendorType vendorType) {
+        this.vendorType = vendorType;
     }
 
     @Override

@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { Plus, Edit, Trash2, Search, Save, X, Package, Tag, Award, RefreshCw, Upload, Download, Eye, CheckCircle, XCircle, Clock, AlertTriangle, ChevronDown, ChevronUp } from 'lucide-react'
 import ProductCategoryManagement from './ProductCategoryManagement'
 import CertificationManagement from './CertificationManagement'
-import { Product, CreateProductRequest, UpdateProductRequest, ProductCategory } from '../../../types/product'
+import { Product, CreateProductRequest, UpdateProductRequest, ProductCategory, ProductGroup } from '../../../types/product'
 import { ProductCertification } from '../../../types/certification'
 import { productService } from '../../../services/productService'
 import { productCategoryService } from '../../../services/productCategoryService'
+import { productGroupService } from '../../../services/productGroupService'
 import { certificationService } from '../../../services/certificationService'
 import { useAuth } from '../../../hooks/useAuth'
 import './ProductManagement.css'
@@ -19,6 +20,7 @@ const ProductManagement: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'products' | 'categories'>('products')
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<ProductCategory[]>([])
+  const [productGroups, setProductGroups] = useState<ProductGroup[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -52,11 +54,23 @@ const ProductManagement: React.FC = () => {
     }
   }
 
+  // Load product groups from API
+  const loadProductGroups = async () => {
+    try {
+      const token = getToken()
+      const productGroupsData = await productGroupService.getAllProductGroups(token || undefined)
+      setProductGroups(productGroupsData)
+    } catch (err) {
+      console.error('Error loading product groups:', err)
+    }
+  }
+
   // Load data on component mount
   useEffect(() => {
     if (isAuthenticated) {
       loadProducts()
       loadCategories()
+      loadProductGroups()
     }
   }, [isAuthenticated])
 
@@ -87,6 +101,7 @@ const ProductManagement: React.FC = () => {
 
   const [formData, setFormData] = useState({
     productName: '',
+    productGroupId: 0,
     productCategoryId: 0,
     skuProductCode: '',
     productDescription: '',
@@ -101,6 +116,7 @@ const ProductManagement: React.FC = () => {
     setEditingProduct(null)
     setFormData({
       productName: '',
+      productGroupId: 0,
       productCategoryId: 0,
       skuProductCode: '',
       productDescription: '',
@@ -117,7 +133,8 @@ const ProductManagement: React.FC = () => {
     setEditingProduct(product)
     setFormData({
       productName: product.productName,
-      productCategoryId: product.productCategoryId,
+      productGroupId: product.productGroupId,
+      productCategoryId: product.productCategoryId || 0,
       skuProductCode: product.skuProductCode,
       productDescription: product.productDescription || '',
       productWeight: product.productWeight,
@@ -443,6 +460,10 @@ const ProductManagement: React.FC = () => {
 
             <div className="product-details">
               <div className="detail-row">
+                <span className="label">Product Group:</span>
+                <span>{product.productGroup?.productGroupName || 'N/A'}</span>
+              </div>
+              <div className="detail-row">
                 <span className="label">Category:</span>
                 <span>{product.productCategory?.productCategoryName || 'N/A'}</span>
               </div>
@@ -663,14 +684,30 @@ const ProductManagement: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Category *</label>
+                  <label className="form-label">Product Group *</label>
+                  <select
+                    className="form-input"
+                    value={formData.productGroupId}
+                    onChange={(e) => setFormData(prev => ({ ...prev, productGroupId: parseInt(e.target.value) }))}
+                    required
+                  >
+                    <option value={0}>Select Product Group</option>
+                    {productGroups.map(group => (
+                      <option key={group.productGroupId} value={group.productGroupId}>
+                        {group.productGroupName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Category</label>
                   <select
                     className="form-input"
                     value={formData.productCategoryId}
                     onChange={(e) => setFormData(prev => ({ ...prev, productCategoryId: parseInt(e.target.value) }))}
-                    required
                   >
-                    <option value={0}>Select Category</option>
+                    <option value={0}>Select Category (Optional)</option>
                     {categories.map(category => (
                       <option key={category.productCategoryId} value={category.productCategoryId}>
                         {category.productCategoryName}

@@ -32,20 +32,30 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   Search as SearchIcon,
-  Refresh as RefreshIcon
+  Refresh as RefreshIcon,
+  Visibility as ViewIcon,
+  Assessment as AssessmentIcon,
+  Business as BusinessIcon,
+  LocationOn as LocationIcon,
+  Phone as PhoneIcon,
+  Email as EmailIcon
 } from '@mui/icons-material';
 import vendorService, { Vendor, VendorFormData } from '../../services/vendorService';
 
 const VendorManagement: React.FC = () => {
   const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [filteredVendors, setFilteredVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const [filterType, setFilterType] = useState<string>('all');
+
   // Dialog states
   const [openDialog, setOpenDialog] = useState(false);
+  const [openViewDialog, setOpenViewDialog] = useState(false);
   const [editingVendor, setEditingVendor] = useState<Vendor | null>(null);
+  const [viewingVendor, setViewingVendor] = useState<Vendor | null>(null);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [vendorToDelete, setVendorToDelete] = useState<Vendor | null>(null);
 
@@ -54,17 +64,40 @@ const VendorManagement: React.FC = () => {
     vendorName: '',
     vendorCode: '',
     vendorCapacityTonnes: 1,
+    vendorType: 'RECYCLING',
     assignedTasks: '',
     vendorPerformanceMetrics: '',
     vendorCertificationStatus: 'VALID',
-    vendorFeedback: ''
+    vendorFeedback: '',
+    contactPerson: '',
+    contactEmail: '',
+    contactPhone: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: 'India'
   });
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
+  const vendorTypes = [
+    'RECYCLING',
+    'COLLECTION',
+    'PROCESSING',
+    'TRANSPORTATION',
+    'DISPOSAL',
+    'CONSULTING',
+    'OTHER'
+  ];
+
   useEffect(() => {
     loadVendors();
   }, []);
+
+  useEffect(() => {
+    filterVendors();
+  }, [vendors, searchTerm, filterType]);
 
   const loadVendors = async () => {
     try {
@@ -78,6 +111,27 @@ const VendorManagement: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const filterVendors = () => {
+    let filtered = vendors;
+
+    // Filter by search term
+    if (searchTerm.trim()) {
+      filtered = filtered.filter(vendor =>
+        vendor.vendorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        vendor.vendorCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (vendor.contactPerson && vendor.contactPerson.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (vendor.contactEmail && vendor.contactEmail.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+
+    // Filter by type
+    if (filterType !== 'all') {
+      filtered = filtered.filter(vendor => vendor.vendorType === filterType);
+    }
+
+    setFilteredVendors(filtered);
   };
 
   const handleSearch = async () => {
@@ -160,12 +214,26 @@ const VendorManagement: React.FC = () => {
       vendorName: vendor.vendorName,
       vendorCode: vendor.vendorCode,
       vendorCapacityTonnes: vendor.vendorCapacityTonnes,
+      vendorType: vendor.vendorType,
       assignedTasks: vendor.assignedTasks,
       vendorPerformanceMetrics: vendor.vendorPerformanceMetrics || '',
       vendorCertificationStatus: vendor.vendorCertificationStatus,
-      vendorFeedback: vendor.vendorFeedback || ''
+      vendorFeedback: vendor.vendorFeedback || '',
+      contactPerson: vendor.contactPerson || '',
+      contactEmail: vendor.contactEmail || '',
+      contactPhone: vendor.contactPhone || '',
+      address: vendor.address || '',
+      city: vendor.city || '',
+      state: vendor.state || '',
+      zipCode: vendor.zipCode || '',
+      country: vendor.country || 'India'
     });
     setOpenDialog(true);
+  };
+
+  const handleView = (vendor: Vendor) => {
+    setViewingVendor(vendor);
+    setOpenViewDialog(true);
   };
 
   const handleDelete = (vendor: Vendor) => {
@@ -195,10 +263,19 @@ const VendorManagement: React.FC = () => {
       vendorName: '',
       vendorCode: '',
       vendorCapacityTonnes: 1,
+      vendorType: 'RECYCLING',
       assignedTasks: '',
       vendorPerformanceMetrics: '',
       vendorCertificationStatus: 'VALID',
-      vendorFeedback: ''
+      vendorFeedback: '',
+      contactPerson: '',
+      contactEmail: '',
+      contactPhone: '',
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: 'India'
     });
     setFormErrors({});
   };
@@ -251,24 +328,34 @@ const VendorManagement: React.FC = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
                 label="Search vendors"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                placeholder="Search by name, code, contact person, or email"
               />
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Box display="flex" gap={1}>
-                <Button
-                  variant="outlined"
-                  startIcon={<SearchIcon />}
-                  onClick={handleSearch}
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth>
+                <InputLabel>Filter by Type</InputLabel>
+                <Select
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
+                  label="Filter by Type"
                 >
-                  Search
-                </Button>
+                  <MenuItem value="all">All Types</MenuItem>
+                  {vendorTypes.map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {type.replace(/_/g, ' ')}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <Box display="flex" gap={1}>
                 <Button
                   variant="outlined"
                   startIcon={<RefreshIcon />}
@@ -295,25 +382,34 @@ const VendorManagement: React.FC = () => {
             <TableRow>
               <TableCell>Vendor Name</TableCell>
               <TableCell>Vendor Code</TableCell>
+              <TableCell>Type</TableCell>
               <TableCell>Capacity (Tonnes)</TableCell>
-              <TableCell>Assigned Tasks</TableCell>
-              <TableCell>Certification Status</TableCell>
+              <TableCell>Contact Person</TableCell>
+              <TableCell>Contact Email</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {vendors.map((vendor) => (
+            {filteredVendors.map((vendor) => (
               <TableRow key={vendor.vendorId}>
-                <TableCell>{vendor.vendorName}</TableCell>
-                <TableCell>{vendor.vendorCode}</TableCell>
-                <TableCell>{vendor.vendorCapacityTonnes}</TableCell>
                 <TableCell>
-                  <Tooltip title={vendor.assignedTasks}>
-                    <Typography variant="body2" noWrap sx={{ maxWidth: 200 }}>
-                      {vendor.assignedTasks}
-                    </Typography>
-                  </Tooltip>
+                  <Typography variant="body2" fontWeight="medium">
+                    {vendor.vendorName}
+                  </Typography>
                 </TableCell>
+                <TableCell>{vendor.vendorCode}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={vendor.vendorType?.replace(/_/g, ' ') || 'RECYCLING'}
+                    color="primary"
+                    size="small"
+                    variant="outlined"
+                  />
+                </TableCell>
+                <TableCell>{vendor.vendorCapacityTonnes}</TableCell>
+                <TableCell>{vendor.contactPerson || 'Not specified'}</TableCell>
+                <TableCell>{vendor.contactEmail || 'Not specified'}</TableCell>
                 <TableCell>
                   <Chip
                     label={vendor.vendorCertificationStatus}
@@ -323,9 +419,18 @@ const VendorManagement: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <IconButton
+                    color="info"
+                    onClick={() => handleView(vendor)}
+                    size="small"
+                    title="View Details"
+                  >
+                    <ViewIcon />
+                  </IconButton>
+                  <IconButton
                     color="primary"
                     onClick={() => handleEdit(vendor)}
                     size="small"
+                    title="Edit Vendor"
                   >
                     <EditIcon />
                   </IconButton>
@@ -333,15 +438,16 @@ const VendorManagement: React.FC = () => {
                     color="error"
                     onClick={() => handleDelete(vendor)}
                     size="small"
+                    title="Delete Vendor"
                   >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
             ))}
-            {vendors.length === 0 && (
+            {filteredVendors.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} align="center">
+                <TableCell colSpan={8} align="center">
                   <Typography variant="body2" color="textSecondary">
                     No vendors found
                   </Typography>
@@ -445,6 +551,122 @@ const VendorManagement: React.FC = () => {
           <Button onClick={handleCloseDialog}>Cancel</Button>
           <Button onClick={handleSubmit} variant="contained">
             {editingVendor ? 'Update' : 'Create'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* View Vendor Dialog */}
+      <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Box display="flex" alignItems="center" gap={1}>
+            <BusinessIcon />
+            Vendor Details - {viewingVendor?.vendorName}
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          {viewingVendor && (
+            <Grid container spacing={3} sx={{ mt: 1 }}>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom color="primary">
+                  Basic Information
+                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Vendor Name</Typography>
+                  <Typography variant="body1" fontWeight="medium">{viewingVendor.vendorName}</Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Vendor Code</Typography>
+                  <Typography variant="body1" fontWeight="medium">{viewingVendor.vendorCode}</Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Vendor Type</Typography>
+                  <Chip
+                    label={viewingVendor.vendorType?.replace(/_/g, ' ') || 'RECYCLING'}
+                    color="primary"
+                    size="small"
+                  />
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Capacity</Typography>
+                  <Typography variant="body1" fontWeight="medium">{viewingVendor.vendorCapacityTonnes} Tonnes</Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Certification Status</Typography>
+                  <Chip
+                    label={viewingVendor.vendorCertificationStatus}
+                    color={getCertificationStatusColor(viewingVendor.vendorCertificationStatus) as any}
+                    size="small"
+                  />
+                </Box>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <Typography variant="h6" gutterBottom color="primary">
+                  Contact Information
+                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Contact Person</Typography>
+                  <Typography variant="body1" fontWeight="medium">{viewingVendor.contactPerson || 'Not specified'}</Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Email</Typography>
+                  <Typography variant="body1" fontWeight="medium">{viewingVendor.contactEmail || 'Not specified'}</Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Phone</Typography>
+                  <Typography variant="body1" fontWeight="medium">{viewingVendor.contactPhone || 'Not specified'}</Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Address</Typography>
+                  <Typography variant="body1" fontWeight="medium">
+                    {viewingVendor.address ? (
+                      <>
+                        {viewingVendor.address}
+                        {viewingVendor.city && <><br />{viewingVendor.city}</>}
+                        {viewingVendor.state && <>, {viewingVendor.state}</>}
+                        {viewingVendor.zipCode && <> - {viewingVendor.zipCode}</>}
+                        {viewingVendor.country && <><br />{viewingVendor.country}</>}
+                      </>
+                    ) : 'Not specified'}
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant="h6" gutterBottom color="primary">
+                  Tasks & Performance
+                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body2" color="textSecondary">Assigned Tasks</Typography>
+                  <Typography variant="body1">{viewingVendor.assignedTasks}</Typography>
+                </Box>
+                {viewingVendor.vendorPerformanceMetrics && (
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" color="textSecondary">Performance Metrics</Typography>
+                    <Typography variant="body1">{viewingVendor.vendorPerformanceMetrics}</Typography>
+                  </Box>
+                )}
+                {viewingVendor.vendorFeedback && (
+                  <Box sx={{ mb: 2 }}>
+                    <Typography variant="body2" color="textSecondary">Feedback</Typography>
+                    <Typography variant="body1">{viewingVendor.vendorFeedback}</Typography>
+                  </Box>
+                )}
+              </Grid>
+            </Grid>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenViewDialog(false)}>Close</Button>
+          <Button
+            onClick={() => {
+              setOpenViewDialog(false);
+              if (viewingVendor) handleEdit(viewingVendor);
+            }}
+            variant="contained"
+            startIcon={<EditIcon />}
+          >
+            Edit Vendor
           </Button>
         </DialogActions>
       </Dialog>

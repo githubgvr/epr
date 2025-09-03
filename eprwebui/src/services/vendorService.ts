@@ -11,6 +11,15 @@ export interface Vendor {
   vendorPerformanceMetrics?: string;
   vendorCertificationStatus: 'VALID' | 'EXPIRED';
   vendorFeedback?: string;
+  contactPerson?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  vendorType: 'RECYCLING' | 'COLLECTION' | 'PROCESSING' | 'TRANSPORTATION' | 'DISPOSAL' | 'CONSULTING' | 'OTHER';
   isActive?: boolean;
 }
 
@@ -22,6 +31,15 @@ export interface VendorFormData {
   vendorPerformanceMetrics?: string;
   vendorCertificationStatus: 'VALID' | 'EXPIRED';
   vendorFeedback?: string;
+  contactPerson?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  vendorType: 'RECYCLING' | 'COLLECTION' | 'PROCESSING' | 'TRANSPORTATION' | 'DISPOSAL' | 'CONSULTING' | 'OTHER';
 }
 
 class VendorService {

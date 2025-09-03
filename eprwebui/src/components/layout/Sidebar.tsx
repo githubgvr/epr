@@ -17,7 +17,9 @@ import {
   Award,
   BarChart3,
   Layers,
-  Truck
+  Truck,
+  Tag,
+  Plus
 } from 'lucide-react'
 import './Sidebar.css'
 
@@ -104,8 +106,18 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentModule }) => {
       case 'producer':
         return [
           { name: 'Dashboard', path: '/producer/dashboard', icon: Home },
-          { name: 'Product Management', path: '/producer/products', icon: Package },
-          { name: 'Product Compositions', path: '/producer/product-compositions', icon: Layers },
+          {
+            name: 'Product Management',
+            path: '/producer/product-management',
+            icon: Package,
+            subItems: [
+              { name: 'Product Groups', path: '/producer/product-groups', icon: Tag },
+              { name: 'Product Categories', path: '/producer/product-categories', icon: Tag },
+              { name: 'Product Types', path: '/producer/product-types', icon: Tag },
+              { name: 'Products', path: '/producer/products', icon: Package },
+              { name: 'Product Compositions', path: '/producer/product-compositions', icon: Layers }
+            ]
+          },
           {
             name: 'Material Management',
             path: '/producer/material-management',
@@ -121,15 +133,23 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentModule }) => {
       case 'recycler':
         return [
           { name: 'Dashboard', path: '/recycler/dashboard', icon: Home },
-          { name: 'Option 1', path: '/recycler/option1', icon: Recycle },
-          { name: 'Option 2', path: '/recycler/option2', icon: Award },
-          { name: 'Option 3', path: '/recycler/option3', icon: Target },
-          { name: 'Option 4', path: '/recycler/option4', icon: BarChart3 }
+          { name: 'Log Recycle Details', path: '/recycler/recycle-logs', icon: FileText },
+          { name: 'Upload Recycling Certifications', path: '/recycler/certifications', icon: Award },
+          { name: 'Tracing Targets', path: '/recycler/tracing-targets', icon: Target }
         ]
       case 'vendor':
         return [
           { name: 'Dashboard', path: '/vendor/dashboard', icon: Home },
-          { name: 'Vendor Management', path: '/vendor/management', icon: Truck }
+          {
+            name: 'Vendor Management',
+            path: '/vendor/vendor-management',
+            icon: Truck,
+            subItems: [
+              { name: 'All Vendors', path: '/vendor/management', icon: Users },
+              { name: 'Create Vendor', path: '/vendor/create', icon: Plus },
+              { name: 'Vendor Performance', path: '/vendor/performance', icon: BarChart3 }
+            ]
+          }
         ]
       case 'compliance':
         return [

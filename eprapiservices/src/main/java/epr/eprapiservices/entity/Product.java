@@ -40,6 +40,14 @@ public class Product extends BaseModel {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ProductGroup productGroup;
 
+    @Column(name = "productCategoryId")
+    private Integer productCategoryId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productCategoryId", insertable = false, updatable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private ProductCategory productCategory;
+
     @Size(max = 250, message = "Product description must not exceed 250 characters")
     @Column(name = "productDescription", length = 250)
     private String productDescription;
@@ -137,6 +145,22 @@ public class Product extends BaseModel {
 
     public void setProductGroup(ProductGroup productGroup) {
         this.productGroup = productGroup;
+    }
+
+    public Integer getProductCategoryId() {
+        return productCategoryId;
+    }
+
+    public void setProductCategoryId(Integer productCategoryId) {
+        this.productCategoryId = productCategoryId;
+    }
+
+    public ProductCategory getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(ProductCategory productCategory) {
+        this.productCategory = productCategory;
     }
 
     public String getProductDescription() {

@@ -102,7 +102,8 @@ export interface CertificationSearchParams {
 export interface CreateProductRequest {
   productName: string
   skuProductCode: string
-  productCategoryId: number
+  productGroupId: number
+  productCategoryId?: number
   productDescription?: string
   productWeight: number
   productLifecycleDuration: number
