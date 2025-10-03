@@ -2,12 +2,27 @@ export interface ProductType {
   productTypeId: number;
   productTypeName: string;
   productTypeDescription?: string;
+  sortOrder?: number;
+  productCategoryId?: number;
+  productCategory?: {
+    productCategoryId: number;
+    productCategoryName: string;
+    description?: string;
+    productGroupId?: number;
+    productGroup?: {
+      productGroupId: number;
+      productGroupName: string;
+      description?: string;
+    };
+  };
   isActive: boolean;
 }
 
 export interface CreateProductTypeRequest {
   productTypeName: string;
   productTypeDescription?: string;
+  sortOrder?: number;
+  productCategoryId?: number;
 }
 
 export interface UpdateProductTypeRequest extends CreateProductTypeRequest {

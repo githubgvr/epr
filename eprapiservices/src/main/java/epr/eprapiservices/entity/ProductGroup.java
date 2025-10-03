@@ -2,8 +2,6 @@ package epr.eprapiservices.entity;
 
 import epr.eprapiservices.Models.BaseModel;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 /**
  * Entity representing product groups for EPR compliance tracking
@@ -17,14 +15,14 @@ public class ProductGroup extends BaseModel {
     @Column(name = "productGroupId")
     private Integer productGroupId;
 
-    @NotBlank(message = "Product group name is required")
-    @Size(max = 100, message = "Product group name must not exceed 100 characters")
-    @Column(name = "productGroupName", nullable = false, unique = true, length = 100)
+    @Column(name = "productGroupName")
     private String productGroupName;
 
-    @Size(max = 500, message = "Description must not exceed 500 characters")
-    @Column(name = "description", length = 500)
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "sortOrder")
+    private Integer sortOrder;
 
     // Default constructor
     public ProductGroup() {
@@ -36,9 +34,10 @@ public class ProductGroup extends BaseModel {
     }
 
     // Constructor with all fields
-    public ProductGroup(String productGroupName, String description) {
+    public ProductGroup(String productGroupName, String description, Integer sortOrder) {
         this.productGroupName = productGroupName;
         this.description = description;
+        this.sortOrder = sortOrder;
     }
 
     // Getters and Setters
@@ -66,12 +65,21 @@ public class ProductGroup extends BaseModel {
         this.description = description;
     }
 
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
     @Override
     public String toString() {
         return "ProductGroup{" +
                 "productGroupId=" + productGroupId +
                 ", productGroupName='" + productGroupName + '\'' +
                 ", description='" + description + '\'' +
+                ", sortOrder=" + sortOrder +
                 ", isActive=" + getIsActive() +
                 '}';
     }

@@ -114,8 +114,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentModule }) => {
               { name: 'Product Groups', path: '/producer/product-groups', icon: Tag },
               { name: 'Product Categories', path: '/producer/product-categories', icon: Tag },
               { name: 'Product Types', path: '/producer/product-types', icon: Tag },
-              { name: 'Products', path: '/producer/products', icon: Package },
-              { name: 'Product Compositions', path: '/producer/product-compositions', icon: Layers }
+              { name: 'Products', path: '/producer/products', icon: Package }
             ]
           },
           {
@@ -123,8 +122,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, currentModule }) => {
             path: '/producer/material-management',
             icon: Layers,
             subItems: [
-              { name: 'Material Types', path: '/producer/material-types', icon: Package },
-              { name: 'Material', path: '/producer/materials', icon: Layers }
+              { name: 'Materials', path: '/producer/materials', icon: Layers },
+              { name: 'Components', path: '/producer/components', icon: Layers }
             ]
           },
           { name: 'Tracking Compliance', path: '/producer/compliance', icon: Target },

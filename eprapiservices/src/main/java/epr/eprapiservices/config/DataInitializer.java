@@ -6,7 +6,6 @@ import epr.eprapiservices.dao.repository.ProductGroupRepository;
 import epr.eprapiservices.dao.repository.ProductCategoryRepository;
 import epr.eprapiservices.dao.repository.ProductRepository;
 import epr.eprapiservices.dao.repository.ProductTypeRepository;
-import epr.eprapiservices.dao.repository.MaterialTypeRepository;
 import epr.eprapiservices.dao.repository.MaterialRepository;
 import epr.eprapiservices.dao.repository.VendorRepository;
 import epr.eprapiservices.dao.repository.RecycleLogRepository;
@@ -16,7 +15,7 @@ import epr.eprapiservices.entity.ProductGroup;
 import epr.eprapiservices.entity.ProductCategory;
 import epr.eprapiservices.entity.Product;
 import epr.eprapiservices.entity.ProductType;
-import epr.eprapiservices.entity.MaterialType;
+
 import epr.eprapiservices.entity.Material;
 import epr.eprapiservices.entity.Vendor;
 import epr.eprapiservices.entity.RecycleLog;
@@ -40,7 +39,6 @@ public class DataInitializer implements CommandLineRunner {
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
     private final ProductTypeRepository productTypeRepository;
-    private final MaterialTypeRepository materialTypeRepository;
     private final MaterialRepository materialRepository;
     private final VendorRepository vendorRepository;
     private final RecycleLogRepository recycleLogRepository;
@@ -52,7 +50,6 @@ public class DataInitializer implements CommandLineRunner {
                           ProductCategoryRepository productCategoryRepository,
                           ProductRepository productRepository,
                           ProductTypeRepository productTypeRepository,
-                          MaterialTypeRepository materialTypeRepository,
                           MaterialRepository materialRepository,
                           VendorRepository vendorRepository,
                           RecycleLogRepository recycleLogRepository,
@@ -63,7 +60,7 @@ public class DataInitializer implements CommandLineRunner {
         this.productCategoryRepository = productCategoryRepository;
         this.productRepository = productRepository;
         this.productTypeRepository = productTypeRepository;
-        this.materialTypeRepository = materialTypeRepository;
+
         this.materialRepository = materialRepository;
         this.vendorRepository = vendorRepository;
         this.recycleLogRepository = recycleLogRepository;
@@ -91,7 +88,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private void initializeDefaultData() {
         createDefaultProductGroups();
-        createDefaultMaterialTypes();
+
         createDefaultMaterials();
         createDefaultVendors();
     }
@@ -145,62 +142,31 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
-    private void createDefaultMaterialTypes() {
-        if (materialTypeRepository.count() == 0) {
-            String[][] materialTypes = {
-                {"Plastic", "All types of plastic materials including PET, HDPE, PVC, etc."},
-                {"Paper", "Paper and cardboard materials"},
-                {"Glass", "Glass containers and materials"},
-                {"Metal", "Aluminum, steel, and other metal materials"},
-                {"Wood", "Wooden materials and products"},
-                {"Textile", "Fabric and textile materials"},
-                {"Electronics", "Electronic waste and components"},
-                {"Batteries", "All types of batteries"},
-                {"Organic", "Biodegradable organic materials"},
-                {"Composite", "Multi-material composite products"}
-            };
-
-            for (String[] mtData : materialTypes) {
-                MaterialType mt = new MaterialType();
-                mt.setMaterialTypeName(mtData[0]);
-                mt.setDescription(mtData[1]);
-                mt.setIsActive(true);
-                materialTypeRepository.save(mt);
-            }
-            System.out.println("Created " + materialTypes.length + " default material types");
-        }
-    }
-
     private void createDefaultMaterials() {
         if (materialRepository.count() == 0) {
-            // First get some material types to reference
-            MaterialType plasticType = materialTypeRepository.findByMaterialTypeNameIgnoreCase("Plastic").orElse(null);
-            MaterialType paperType = materialTypeRepository.findByMaterialTypeNameIgnoreCase("Paper").orElse(null);
-            MaterialType glassType = materialTypeRepository.findByMaterialTypeNameIgnoreCase("Glass").orElse(null);
-            MaterialType metalType = materialTypeRepository.findByMaterialTypeNameIgnoreCase("Metal").orElse(null);
+            Object[][] materials = {
+                {"PET001", "PET Plastic", "Polyethylene Terephthalate - commonly used for bottles and containers", 1},
+                {"HDPE002", "HDPE Plastic", "High-Density Polyethylene - used for milk jugs, detergent bottles", 2},
+                {"PVC003", "PVC Plastic", "Polyvinyl Chloride - used for pipes, packaging, and medical devices", 3},
+                {"LDPE004", "LDPE Plastic", "Low-Density Polyethylene - used for plastic bags and films", 4},
+                {"PP005", "PP Plastic", "Polypropylene - used for food containers and automotive parts", 5},
+                {"PS006", "PS Plastic", "Polystyrene - used for disposable cups and packaging foam", 6},
+                {"CARD001", "Cardboard", "Corrugated cardboard material for packaging and shipping boxes", 7},
+                {"PAPER002", "Paper", "Various paper materials including newsprint, office paper, and magazines", 8},
+                {"GLASS001", "Glass", "Clear and colored glass materials from bottles and containers", 9},
+                {"METAL001", "Aluminum", "Aluminum cans, foils, and other aluminum-based materials", 10}
+            };
 
-            if (plasticType != null && paperType != null && glassType != null && metalType != null) {
-                Object[][] materials = {
-                    {"PET-001", "PET Plastic", "Polyethylene Terephthalate plastic for bottles", plasticType.getMaterialTypeId()},
-                    {"HDPE-001", "HDPE Plastic", "High-Density Polyethylene for containers", plasticType.getMaterialTypeId()},
-                    {"CARD-001", "Cardboard", "Corrugated cardboard for packaging", paperType.getMaterialTypeId()},
-                    {"PAPER-001", "Office Paper", "Standard office printing paper", paperType.getMaterialTypeId()},
-                    {"GLASS-001", "Clear Glass", "Clear glass for bottles and containers", glassType.getMaterialTypeId()},
-                    {"ALU-001", "Aluminum", "Aluminum for cans and packaging", metalType.getMaterialTypeId()},
-                    {"STEEL-001", "Steel", "Steel for containers and structural components", metalType.getMaterialTypeId()}
-                };
-
-                for (Object[] matData : materials) {
-                    Material material = new Material();
-                    material.setMaterialCode((String) matData[0]);
-                    material.setMaterialName((String) matData[1]);
-                    material.setDescription((String) matData[2]);
-                    material.setMaterialTypeId((Integer) matData[3]);
-                    material.setIsActive(true);
-                    materialRepository.save(material);
-                }
-                System.out.println("Created " + materials.length + " default materials");
+            for (Object[] matData : materials) {
+                Material material = new Material();
+                material.setMaterialCode((String) matData[0]);
+                material.setMaterialName((String) matData[1]);
+                material.setDescription((String) matData[2]);
+                material.setSortOrder((Integer) matData[3]);
+                material.setIsActive(true);
+                materialRepository.save(material);
             }
+            System.out.println("Created " + materials.length + " default materials");
         }
     }
 
@@ -220,7 +186,7 @@ public class DataInitializer implements CommandLineRunner {
                 vendor.setVendorName((String) vendorData[1]);
                 vendor.setVendorCapacityTonnes((BigDecimal) vendorData[2]);
                 vendor.setAssignedTasks((String) vendorData[3]);
-                vendor.setVendorCertificationStatus(Vendor.CertificationStatus.valueOf((String) vendorData[4]));
+                vendor.setVendorCertificationStatus((String) vendorData[4]);
                 vendor.setVendorFeedback((String) vendorData[5]);
                 vendor.setVendorPerformanceMetrics((String) vendorData[6]);
                 vendor.setIsActive(true);
@@ -231,6 +197,8 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void initializeProductCategories() {
+        // Temporarily disabled - will be updated with new hierarchical structure
+        /*
         if (productCategoryRepository.count() == 0) {
             ProductCategory[] categories = {
                 new ProductCategory("Mobile Phones", "Smartphones and mobile devices", "MOB"),
@@ -242,16 +210,7 @@ public class DataInitializer implements CommandLineRunner {
                 new ProductCategory("Car Parts", "Automotive components", "CPART"),
                 new ProductCategory("Batteries", "All types of batteries", "BATT")
             };
-
-            for (int i = 0; i < categories.length; i++) {
-                ProductCategory category = categories[i];
-                category.setSortOrder(i + 1);
-                category.setIsActive(true);
-                productCategoryRepository.save(category);
-            }
-
-            System.out.println("Initialized " + categories.length + " product categories");
-        }
+        */
     }
 
     private void initializeEnhancedVendors() {
@@ -267,7 +226,7 @@ public class DataInitializer implements CommandLineRunner {
                 vendor.setZipCode("40000" + vendor.getVendorId());
                 vendor.setCountry("India");
                 if (vendor.getVendorType() == null) {
-                    vendor.setVendorType(Vendor.VendorType.RECYCLING);
+                    vendor.setVendorType("RECYCLING");
                 }
                 vendorRepository.save(vendor);
             }
@@ -481,12 +440,6 @@ public class DataInitializer implements CommandLineRunner {
         Product product = new Product();
         product.setProductName(name);
         product.setSkuProductCode(skuCode);
-        product.setProductGroup(productGroup);
-        product.setProductGroupId(productGroup.getProductGroupId()); // Explicitly set the ID
-        product.setProductCategory(productCategory);
-        if (productCategory != null) {
-            product.setProductCategoryId(productCategory.getProductCategoryId());
-        }
         product.setProductDescription(description);
         product.setProductWeight(BigDecimal.valueOf(weight));
         product.setProductLifecycleDuration(lifecycleDuration);
@@ -500,6 +453,8 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void initializeProductTypes() {
+        // Temporarily disabled - will be updated with new hierarchical structure
+        /*
         if (productTypeRepository.count() > 0) {
             return; // Product types already exist
         }
@@ -515,6 +470,7 @@ public class DataInitializer implements CommandLineRunner {
         createProductType("Medical Devices", "Healthcare and medical equipment and devices");
         createProductType("Industrial Equipment", "Industrial machinery and equipment");
         createProductType("Toys & Games", "Children's toys, games, and recreational products");
+        */
     }
 
     private void createProductType(String name, String description) {

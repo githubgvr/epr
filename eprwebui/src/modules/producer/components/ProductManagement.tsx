@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Plus, Edit, Trash2, Search, Save, X, Package, Tag, Award, RefreshCw, Upload, Download, Eye, CheckCircle, XCircle, Clock, AlertTriangle, ChevronDown, ChevronUp } from 'lucide-react'
-import ProductCategoryManagement from './ProductCategoryManagement'
+import { Plus, Edit, Trash2, Search, Save, X, Package, Award, RefreshCw, Upload, Download, Eye, CheckCircle, XCircle, Clock, AlertTriangle, ChevronDown, ChevronUp } from 'lucide-react'
 import CertificationManagement from './CertificationManagement'
-import { Product, CreateProductRequest, UpdateProductRequest, ProductCategory, ProductGroup } from '../../../types/product'
+import { Product, CreateProductRequest, UpdateProductRequest } from '../../../types/product'
 import { ProductCertification } from '../../../types/certification'
 import { productService } from '../../../services/productService'
-import { productCategoryService } from '../../../services/productCategoryService'
-import { productGroupService } from '../../../services/productGroupService'
 import { certificationService } from '../../../services/certificationService'
 import { useAuth } from '../../../hooks/useAuth'
 import './ProductManagement.css'
+
+// Component interface
+interface Component {
+  componentId: number
+  componentName: string
+  componentCode: string
+  componentWeight?: number
+}
+
+// Component Composition interface
+interface ComponentComposition {
+  id?: number
+  componentId: number
+  component?: Component
+  quantity: number
+  notes: string
+}
 
 
 
 const ProductManagement: React.FC = () => {
   const { t } = useTranslation()
   const { isAuthenticated } = useAuth()
-  const [activeTab, setActiveTab] = useState<'products' | 'categories'>('products')
   const [products, setProducts] = useState<Product[]>([])
-  const [categories, setCategories] = useState<ProductCategory[]>([])
-  const [productGroups, setProductGroups] = useState<ProductGroup[]>([])
+  const [components, setComponents] = useState<Component[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -43,25 +55,22 @@ const ProductManagement: React.FC = () => {
     }
   }
 
-  // Load categories from API
-  const loadCategories = async () => {
+  // Load components from API
+  const loadComponents = async () => {
     try {
       const token = getToken()
-      const categoriesData = await productCategoryService.getAllProductCategories(token || undefined)
-      setCategories(categoriesData)
+      const response = await fetch('http://localhost:8080/api/components', {
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json'
+        }
+      })
+      if (response.ok) {
+        const componentsData = await response.json()
+        setComponents(componentsData)
+      }
     } catch (err) {
-      console.error('Error loading categories:', err)
-    }
-  }
-
-  // Load product groups from API
-  const loadProductGroups = async () => {
-    try {
-      const token = getToken()
-      const productGroupsData = await productGroupService.getAllProductGroups(token || undefined)
-      setProductGroups(productGroupsData)
-    } catch (err) {
-      console.error('Error loading product groups:', err)
+      console.error('Error loading components:', err)
     }
   }
 
@@ -69,8 +78,7 @@ const ProductManagement: React.FC = () => {
   useEffect(() => {
     if (isAuthenticated) {
       loadProducts()
-      loadCategories()
-      loadProductGroups()
+      loadComponents()
     }
   }, [isAuthenticated])
 
@@ -101,8 +109,6 @@ const ProductManagement: React.FC = () => {
 
   const [formData, setFormData] = useState({
     productName: '',
-    productGroupId: 0,
-    productCategoryId: 0,
     skuProductCode: '',
     productDescription: '',
     productWeight: 0,
@@ -112,12 +118,20 @@ const ProductManagement: React.FC = () => {
     productExpiryDate: ''
   })
 
+  // Component composition state
+  const [componentCompositions, setComponentCompositions] = useState<ComponentComposition[]>([])
+  const [compositionFormData, setCompositionFormData] = useState<ComponentComposition>({
+    componentId: 0,
+    quantity: 0,
+    notes: ''
+  })
+  const [editingCompositionIndex, setEditingCompositionIndex] = useState<number | null>(null)
+  const [compositionError, setCompositionError] = useState<string>('')
+
   const openCreateModal = () => {
     setEditingProduct(null)
     setFormData({
       productName: '',
-      productGroupId: 0,
-      productCategoryId: 0,
       skuProductCode: '',
       productDescription: '',
       productWeight: 0,
@@ -126,6 +140,10 @@ const ProductManagement: React.FC = () => {
       productManufacturingDate: '',
       productExpiryDate: ''
     })
+    setComponentCompositions([])
+    setCompositionFormData({ componentId: 0, quantity: 0, notes: '' })
+    setEditingCompositionIndex(null)
+    setCompositionError('')
     setShowModal(true)
   }
 
@@ -133,8 +151,6 @@ const ProductManagement: React.FC = () => {
     setEditingProduct(product)
     setFormData({
       productName: product.productName,
-      productGroupId: product.productGroupId,
-      productCategoryId: product.productCategoryId || 0,
       skuProductCode: product.skuProductCode,
       productDescription: product.productDescription || '',
       productWeight: product.productWeight,
@@ -143,6 +159,11 @@ const ProductManagement: React.FC = () => {
       productManufacturingDate: product.productManufacturingDate || '',
       productExpiryDate: product.productExpiryDate || ''
     })
+    // Load component compositions if available
+    setComponentCompositions((product as any).componentCompositions || [])
+    setCompositionFormData({ componentId: 0, quantity: 0, notes: '' })
+    setEditingCompositionIndex(null)
+    setCompositionError('')
     setShowModal(true)
   }
 
@@ -324,6 +345,50 @@ const ProductManagement: React.FC = () => {
     }
   }
 
+  // Component composition handlers
+  const handleAddComposition = () => {
+    setCompositionError('')
+
+    if (!compositionFormData.componentId || compositionFormData.componentId === 0) {
+      setCompositionError('Please select a component')
+      return
+    }
+
+    if (!compositionFormData.quantity || compositionFormData.quantity <= 0) {
+      setCompositionError('Quantity must be greater than 0')
+      return
+    }
+
+    if (editingCompositionIndex !== null) {
+      // Update existing composition
+      const updated = [...componentCompositions]
+      updated[editingCompositionIndex] = compositionFormData
+      setComponentCompositions(updated)
+      setEditingCompositionIndex(null)
+    } else {
+      // Add new composition
+      setComponentCompositions([...componentCompositions, compositionFormData])
+    }
+
+    // Reset form
+    setCompositionFormData({ componentId: 0, quantity: 0, notes: '' })
+  }
+
+  const handleEditComposition = (index: number) => {
+    setCompositionFormData(componentCompositions[index])
+    setEditingCompositionIndex(index)
+    setCompositionError('')
+  }
+
+  const handleDeleteComposition = (index: number) => {
+    const updated = componentCompositions.filter((_, i) => i !== index)
+    setComponentCompositions(updated)
+    if (editingCompositionIndex === index) {
+      setCompositionFormData({ componentId: 0, quantity: 0, notes: '' })
+      setEditingCompositionIndex(null)
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -332,16 +397,25 @@ const ProductManagement: React.FC = () => {
       setError(null)
       const token = getToken()
 
+      const productData = {
+        ...formData,
+        componentCompositions: componentCompositions.map(comp => ({
+          componentId: comp.componentId,
+          quantity: comp.quantity,
+          notes: comp.notes
+        }))
+      }
+
       if (editingProduct) {
         // Update existing product
         const updateRequest: UpdateProductRequest = {
           productId: editingProduct.productId,
-          ...formData
+          ...productData
         }
         await productService.updateProduct(editingProduct.productId, updateRequest, token || undefined)
       } else {
         // Create new product
-        const createRequest: CreateProductRequest = formData
+        const createRequest: CreateProductRequest = productData as any
         await productService.createProduct(createRequest, token || undefined)
       }
 
@@ -390,28 +464,7 @@ const ProductManagement: React.FC = () => {
         </button>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="tab-navigation">
-        <button
-          className={`tab-button ${activeTab === 'products' ? 'active' : ''}`}
-          onClick={() => setActiveTab('products')}
-        >
-          <Package size={16} />
-          Products
-        </button>
-        <button
-          className={`tab-button ${activeTab === 'categories' ? 'active' : ''}`}
-          onClick={() => setActiveTab('categories')}
-        >
-          <Tag size={16} />
-          Product Categories
-        </button>
-      </div>
-
-      {/* Tab Content */}
-      {activeTab === 'products' && (
-        <>
-          {/* Search Bar */}
+      {/* Search Bar */}
       <div className="search-section">
         <div className="search-bar">
           <input
@@ -660,7 +713,8 @@ const ProductManagement: React.FC = () => {
             </div>
             
             <form onSubmit={handleSubmit} className="modal-form">
-              <div className="form-grid">
+              {/* Vertical layout - one field per row */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div className="form-group">
                   <label className="form-label">Product Name *</label>
                   <input
@@ -681,39 +735,6 @@ const ProductManagement: React.FC = () => {
                     onChange={(e) => setFormData(prev => ({ ...prev, skuProductCode: e.target.value }))}
                     required
                   />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Product Group *</label>
-                  <select
-                    className="form-input"
-                    value={formData.productGroupId}
-                    onChange={(e) => setFormData(prev => ({ ...prev, productGroupId: parseInt(e.target.value) }))}
-                    required
-                  >
-                    <option value={0}>Select Product Group</option>
-                    {productGroups.map(group => (
-                      <option key={group.productGroupId} value={group.productGroupId}>
-                        {group.productGroupName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Category</label>
-                  <select
-                    className="form-input"
-                    value={formData.productCategoryId}
-                    onChange={(e) => setFormData(prev => ({ ...prev, productCategoryId: parseInt(e.target.value) }))}
-                  >
-                    <option value={0}>Select Category (Optional)</option>
-                    {categories.map(category => (
-                      <option key={category.productCategoryId} value={category.productCategoryId}>
-                        {category.productCategoryName}
-                      </option>
-                    ))}
-                  </select>
                 </div>
 
                 <div className="form-group">
@@ -756,7 +777,7 @@ const ProductManagement: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group full-width">
+                <div className="form-group">
                   <label className="form-label">Description</label>
                   <textarea
                     className="form-input"
@@ -786,7 +807,114 @@ const ProductManagement: React.FC = () => {
                   />
                 </div>
 
+                {/* Component Composition Section */}
+                <div style={{ marginTop: '24px', borderTop: '1px solid #e0e0e0', paddingTop: '24px' }}>
+                  <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600' }}>Component Composition</h3>
 
+                  {/* Component Composition Form - Horizontal Layout */}
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-end', marginBottom: '16px', flexWrap: 'wrap' }}>
+                    <div style={{ flex: '1', minWidth: '200px' }}>
+                      <label className="form-label">Component *</label>
+                      <select
+                        className="form-input"
+                        value={compositionFormData.componentId}
+                        onChange={(e) => setCompositionFormData(prev => ({ ...prev, componentId: parseInt(e.target.value) }))}
+                      >
+                        <option value={0}>Select Component</option>
+                        {components.map(component => (
+                          <option key={component.componentId} value={component.componentId}>
+                            {component.componentName} ({component.componentCode})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div style={{ flex: '0 0 150px' }}>
+                      <label className="form-label">Quantity *</label>
+                      <input
+                        type="number"
+                        step="0.001"
+                        min="0.001"
+                        className="form-input"
+                        value={compositionFormData.quantity}
+                        onChange={(e) => setCompositionFormData(prev => ({ ...prev, quantity: parseFloat(e.target.value) || 0 }))}
+                      />
+                    </div>
+
+                    <div style={{ flex: '1', minWidth: '200px' }}>
+                      <label className="form-label">Notes</label>
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={compositionFormData.notes}
+                        onChange={(e) => setCompositionFormData(prev => ({ ...prev, notes: e.target.value }))}
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handleAddComposition}
+                      style={{ height: '38px' }}
+                    >
+                      {editingCompositionIndex !== null ? 'Update' : 'Add'}
+                    </button>
+                  </div>
+
+                  {compositionError && (
+                    <div style={{ color: '#d32f2f', fontSize: '14px', marginBottom: '12px' }}>
+                      {compositionError}
+                    </div>
+                  )}
+
+                  {/* Component Compositions Grid */}
+                  {componentCompositions.length > 0 && (
+                    <div style={{ overflowX: 'auto' }}>
+                      <table className="data-table" style={{ width: '100%', marginTop: '12px' }}>
+                        <thead>
+                          <tr>
+                            <th>Component</th>
+                            <th>Quantity</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {componentCompositions.map((comp, index) => {
+                            const component = components.find(c => c.componentId === comp.componentId)
+                            return (
+                              <tr key={index}>
+                                <td>{component ? `${component.componentName} (${component.componentCode})` : 'Unknown'}</td>
+                                <td>{comp.quantity.toFixed(3)}</td>
+                                <td>{comp.notes || '-'}</td>
+                                <td>
+                                  <div style={{ display: 'flex', gap: '8px' }}>
+                                    <button
+                                      type="button"
+                                      className="btn-icon"
+                                      onClick={() => handleEditComposition(index)}
+                                      title="Edit"
+                                    >
+                                      <Edit size={16} />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="btn-icon"
+                                      onClick={() => handleDeleteComposition(index)}
+                                      title="Delete"
+                                    >
+                                      <Trash2 size={16} />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            )
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="modal-actions">
@@ -916,14 +1044,6 @@ const ProductManagement: React.FC = () => {
         </div>
       )}
 
-        </>
-      )}
-
-      {/* Product Categories Tab */}
-      {activeTab === 'categories' && (
-        <ProductCategoryManagement />
-      )}
-
       {/* Certification Management Modal */}
       {showCertifications && selectedProductId && (
         <CertificationManagement
@@ -931,11 +1051,6 @@ const ProductManagement: React.FC = () => {
           onClose={closeCertificationManagement}
         />
       )}
-
-
-
-
-
     </div>
   )
 }

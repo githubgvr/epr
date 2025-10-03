@@ -25,12 +25,15 @@ public class ProductCategoryController {
     private ProductCategoryService productCategoryService;
 
     /**
-     * Get all active product categories
+     * Get all product categories with filtering and sorting
      */
     @GetMapping
-    public ResponseEntity<List<ProductCategory>> getAllProductCategories() {
+    public ResponseEntity<List<ProductCategory>> getAllProductCategories(
+            @RequestParam(defaultValue = "true") Boolean activeOnly,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder) {
         try {
-            List<ProductCategory> categories = productCategoryService.getAllActiveProductCategories();
+            List<ProductCategory> categories = productCategoryService.getAllProductCategories(activeOnly, sortBy, sortOrder);
             return ResponseEntity.ok(categories);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -163,20 +166,7 @@ public class ProductCategoryController {
         }
     }
 
-    /**
-     * Check if category code exists
-     */
-    @GetMapping("/exists/code/{code}")
-    public ResponseEntity<Map<String, Boolean>> checkCategoryCodeExists(@PathVariable String code) {
-        try {
-            boolean exists = productCategoryService.isCategoryCodeExists(code);
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("exists", exists);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    // Category code existence check removed - no longer using codes
 
     /**
      * Validate category name availability
@@ -195,22 +185,7 @@ public class ProductCategoryController {
         }
     }
 
-    /**
-     * Validate category code availability
-     */
-    @GetMapping("/validate-code")
-    public ResponseEntity<Map<String, Boolean>> validateCategoryCode(
-            @RequestParam String code,
-            @RequestParam(required = false) Integer excludeId) {
-        try {
-            boolean available = productCategoryService.isCategoryCodeAvailable(code, excludeId);
-            Map<String, Boolean> response = new HashMap<>();
-            response.put("available", available);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+    // Category code validation removed - no longer using codes
 
     /**
      * Get count of active categories

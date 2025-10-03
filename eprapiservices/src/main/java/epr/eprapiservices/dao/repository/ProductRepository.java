@@ -29,12 +29,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findBySkuProductCode(@Param("skuProductCode") String skuProductCode);
 
     /**
-     * Find products by product group ID
-     */
-    @Query("SELECT p FROM Product p WHERE p.productGroupId = :productGroupId AND p.isActive = true ORDER BY p.productName")
-    List<Product> findByProductGroupId(@Param("productGroupId") Integer productGroupId);
-
-    /**
      * Search products by name, SKU, or description (case-insensitive)
      */
     @Query("SELECT p FROM Product p WHERE p.isActive = true AND " +
@@ -101,12 +95,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      */
     @Query("SELECT COUNT(p) FROM Product p WHERE p.isActive = true")
     long countActiveProducts();
-
-    /**
-     * Count products by group
-     */
-    @Query("SELECT COUNT(p) FROM Product p WHERE p.productGroupId = :productGroupId AND p.isActive = true")
-    long countProductsByGroup(@Param("productGroupId") Integer productGroupId);
 
     /**
      * Find products with regulatory certifications

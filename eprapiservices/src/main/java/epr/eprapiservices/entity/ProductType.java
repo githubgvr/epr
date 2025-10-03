@@ -2,8 +2,6 @@ package epr.eprapiservices.entity;
 
 import epr.eprapiservices.Models.BaseModel;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "producttype")
@@ -14,21 +12,26 @@ public class ProductType extends BaseModel {
     @Column(name = "productTypeId")
     private Integer productTypeId;
 
-    @NotBlank(message = "Product type name is required")
-    @Size(max = 100, message = "Product type name cannot exceed 100 characters")
-    @Column(name = "productTypeName", nullable = false, length = 100)
+    @Column(name = "productTypeName")
     private String productTypeName;
 
-    @Size(max = 500, message = "Product type description cannot exceed 500 characters")
-    @Column(name = "productTypeDescription", length = 500)
+    @Column(name = "productTypeDescription")
     private String productTypeDescription;
+
+    @Column(name = "sortOrder")
+    private Integer sortOrder;
+
+    @Column(name = "productCategoryId")
+    private Integer productCategoryId;
 
     // Constructors+
     public ProductType() {}
 
-    public ProductType(String productTypeName, String productTypeDescription) {
+    public ProductType(String productTypeName, String productTypeDescription, Integer sortOrder, Integer productCategoryId) {
         this.productTypeName = productTypeName;
         this.productTypeDescription = productTypeDescription;
+        this.sortOrder = sortOrder;
+        this.productCategoryId = productCategoryId;
     }
 
     // Getters and Setters
@@ -56,12 +59,30 @@ public class ProductType extends BaseModel {
         this.productTypeDescription = productTypeDescription;
     }
 
+    public Integer getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(Integer sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public Integer getProductCategoryId() {
+        return productCategoryId;
+    }
+
+    public void setProductCategoryId(Integer productCategoryId) {
+        this.productCategoryId = productCategoryId;
+    }
+
     @Override
     public String toString() {
         return "ProductType{" +
                 "productTypeId=" + productTypeId +
                 ", productTypeName='" + productTypeName + '\'' +
                 ", productTypeDescription='" + productTypeDescription + '\'' +
+                ", sortOrder=" + sortOrder +
+                ", productCategoryId=" + productCategoryId +
                 ", isActive=" + getIsActive() +
                 '}';
     }

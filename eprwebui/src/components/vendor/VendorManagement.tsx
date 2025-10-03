@@ -41,6 +41,7 @@ import {
   Email as EmailIcon
 } from '@mui/icons-material';
 import vendorService, { Vendor, VendorFormData } from '../../services/vendorService';
+import VendorCreation from './VendorCreation';
 
 const VendorManagement: React.FC = () => {
   const [vendors, setVendors] = useState<Vendor[]>([]);
@@ -48,6 +49,7 @@ const VendorManagement: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [showVendorCreation, setShowVendorCreation] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<string>('all');
 
@@ -366,7 +368,7 @@ const VendorManagement: React.FC = () => {
                 <Button
                   variant="contained"
                   startIcon={<AddIcon />}
-                  onClick={() => setOpenDialog(true)}
+                  onClick={() => setShowVendorCreation(true)}
                 >
                   Add Vendor
                 </Button>
@@ -687,6 +689,27 @@ const VendorManagement: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Vendor Creation Component */}
+      {showVendorCreation && (
+        <Dialog
+          open={showVendorCreation}
+          onClose={() => setShowVendorCreation(false)}
+          maxWidth="lg"
+          fullWidth
+        >
+          <DialogContent sx={{ p: 0 }}>
+            <VendorCreation
+              onCancel={() => setShowVendorCreation(false)}
+              onSuccess={() => {
+                setShowVendorCreation(false);
+                loadVendors();
+                setSuccess('Vendor created successfully');
+              }}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </Box>
   );
 };

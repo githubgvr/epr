@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface MaterialRepository extends JpaRepository<Material, Integer> {
 
     /**
-     * Find all active materials ordered by material name
+     * Find all active materials ordered by sort order then material name
      */
-    @Query("SELECT m FROM Material m WHERE m.isActive = true ORDER BY m.materialName")
+    @Query("SELECT m FROM Material m WHERE m.isActive = true ORDER BY m.sortOrder, m.materialName")
     List<Material> findAllActiveMaterials();
 
     /**
@@ -25,15 +25,9 @@ public interface MaterialRepository extends JpaRepository<Material, Integer> {
     Optional<Material> findByMaterialCode(@Param("materialCode") String materialCode);
 
     /**
-     * Find materials by material type ID
-     */
-    @Query("SELECT m FROM Material m WHERE m.materialTypeId = :materialTypeId AND m.isActive = true ORDER BY m.materialName")
-    List<Material> findByMaterialTypeId(@Param("materialTypeId") Integer materialTypeId);
-
-    /**
      * Find materials by material name containing (case-insensitive search)
      */
-    @Query("SELECT m FROM Material m WHERE LOWER(m.materialName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) AND m.isActive = true ORDER BY m.materialName")
+    @Query("SELECT m FROM Material m WHERE LOWER(m.materialName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) AND m.isActive = true ORDER BY m.sortOrder, m.materialName")
     List<Material> findByMaterialNameContainingIgnoreCase(@Param("searchTerm") String searchTerm);
 
     /**
@@ -43,20 +37,20 @@ public interface MaterialRepository extends JpaRepository<Material, Integer> {
     boolean existsByMaterialCodeAndNotMaterialId(@Param("materialCode") String materialCode, @Param("materialId") Integer materialId);
 
     /**
-     * Find materials with their material type information
+     * Find all active materials ordered by sort order
      */
-    @Query("SELECT m FROM Material m LEFT JOIN FETCH m.materialType WHERE m.isActive = true ORDER BY m.materialName")
+    @Query("SELECT m FROM Material m WHERE m.isActive = true ORDER BY m.sortOrder, m.materialName")
     List<Material> findAllActiveMaterialsWithType();
 
     /**
-     * Find material by ID with material type information
+     * Find material by ID
      */
-    @Query("SELECT m FROM Material m LEFT JOIN FETCH m.materialType WHERE m.materialId = :materialId")
+    @Query("SELECT m FROM Material m WHERE m.materialId = :materialId")
     Optional<Material> findByIdWithType(@Param("materialId") Integer materialId);
 
     /**
-     * Count materials by material type
+     * Find materials by active status ordered by sort order
      */
-    @Query("SELECT COUNT(m) FROM Material m WHERE m.materialTypeId = :materialTypeId AND m.isActive = true")
-    long countByMaterialTypeId(@Param("materialTypeId") Integer materialTypeId);
+    @Query("SELECT m FROM Material m WHERE m.isActive = :isActive ORDER BY m.sortOrder, m.materialName")
+    List<Material> findByIsActive(@Param("isActive") Boolean isActive);
 }

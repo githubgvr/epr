@@ -2,8 +2,11 @@ package epr.eprapiservices.service;
 
 import epr.eprapiservices.entity.Product;
 import epr.eprapiservices.entity.ProductCertification;
+import epr.eprapiservices.entity.ProductComponentComposition;
+import epr.eprapiservices.entity.Component;
 import epr.eprapiservices.dao.repository.ProductRepository;
 import epr.eprapiservices.dao.repository.ProductCertificationRepository;
+import epr.eprapiservices.dao.repository.ComponentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +32,16 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductCertificationRepository certificationRepository;
+    private final ComponentRepository componentRepository;
     private static final String UPLOAD_DIR = "uploads/certifications/";
 
     @Autowired
-    public ProductService(ProductRepository productRepository, ProductCertificationRepository certificationRepository) {
+    public ProductService(ProductRepository productRepository,
+                         ProductCertificationRepository certificationRepository,
+                         ComponentRepository componentRepository) {
         this.productRepository = productRepository;
         this.certificationRepository = certificationRepository;
+        this.componentRepository = componentRepository;
         // Create upload directory if it doesn't exist
         try {
             Files.createDirectories(Paths.get(UPLOAD_DIR));
@@ -51,10 +58,10 @@ public class ProductService {
         List<Product> products = productRepository.findAll();
         // Load certifications for each product
         for (Product product : products) {
-            List<ProductCertification> certifications = certificationRepository.findByProductIdAndIsActiveTrue(
-                product.getProductId()
-            );
-            product.setCertifications(certifications);
+            // List<ProductCertification> certifications = certificationRepository.findByProductIdAndIsActiveTrue(
+            //     product.getProductId()
+            // );
+            // product.setCertifications(certifications); // Commented out - method not available
         }
         return products;
     }
@@ -97,19 +104,11 @@ public class ProductService {
     }
 
     /**
-     * Get products by group
-     */
-    @Transactional(readOnly = true)
-    public List<Product> getProductsByGroup(Integer productGroupId) {
-        return productRepository.findByProductGroupId(productGroupId);
-    }
-
-    /**
      * Create a new product
      */
     public Product createProduct(Product product) {
         validateProduct(product);
-        
+
         // Check if SKU already exists
         if (productRepository.existsBySkuProductCodeIgnoreCase(product.getSkuProductCode())) {
             throw new RuntimeException("Product with SKU '" + product.getSkuProductCode() + "' already exists");
@@ -125,6 +124,22 @@ public class ProductService {
             product.setIsActive(true);
         }
 
+        // Handle component compositions
+        if (product.getComponentCompositions() != null && !product.getComponentCompositions().isEmpty()) {
+            for (ProductComponentComposition composition : product.getComponentCompositions()) {
+                // Get component from componentId
+                if (composition.getComponentId() != null) {
+                    Component component = componentRepository.findById(composition.getComponentId().longValue())
+                        .orElseThrow(() -> new RuntimeException("Component not found with ID: " + composition.getComponentId()));
+                    composition.setComponent(component);
+                }
+                composition.setProduct(product);
+                if (composition.getIsActive() == null) {
+                    composition.setIsActive(true);
+                }
+            }
+        }
+
         return productRepository.save(product);
     }
 
@@ -133,9 +148,9 @@ public class ProductService {
      */
     public Product updateProduct(Integer id, Product productDetails) {
         Product existingProduct = getProductById(id);
-        
+
         validateProduct(productDetails);
-        
+
         // Check if SKU already exists for another product
         if (!existingProduct.getSkuProductCode().equalsIgnoreCase(productDetails.getSkuProductCode()) &&
             productRepository.existsBySkuProductCodeIgnoreCaseAndIdNot(productDetails.getSkuProductCode(), id)) {
@@ -145,16 +160,36 @@ public class ProductService {
         // Update fields
         existingProduct.setProductName(productDetails.getProductName());
         existingProduct.setSkuProductCode(productDetails.getSkuProductCode());
-        existingProduct.setProductGroupId(productDetails.getProductGroupId());
         existingProduct.setProductDescription(productDetails.getProductDescription());
         existingProduct.setProductWeight(productDetails.getProductWeight());
         existingProduct.setProductLifecycleDuration(productDetails.getProductLifecycleDuration());
         existingProduct.setComplianceTargetPercentage(productDetails.getComplianceTargetPercentage());
         existingProduct.setProductManufacturingDate(productDetails.getProductManufacturingDate());
         existingProduct.setProductExpiryDate(productDetails.getProductExpiryDate());
-        
+
         if (productDetails.getRegulatoryCertificationsPath() != null) {
             existingProduct.setRegulatoryCertificationsPath(productDetails.getRegulatoryCertificationsPath());
+        }
+
+        // Update component compositions
+        if (productDetails.getComponentCompositions() != null) {
+            // Clear existing compositions
+            existingProduct.getComponentCompositions().clear();
+
+            // Add new compositions
+            for (ProductComponentComposition composition : productDetails.getComponentCompositions()) {
+                // Get component from componentId
+                if (composition.getComponentId() != null) {
+                    Component component = componentRepository.findById(composition.getComponentId().longValue())
+                        .orElseThrow(() -> new RuntimeException("Component not found with ID: " + composition.getComponentId()));
+                    composition.setComponent(component);
+                }
+                composition.setProduct(existingProduct);
+                if (composition.getIsActive() == null) {
+                    composition.setIsActive(true);
+                }
+                existingProduct.getComponentCompositions().add(composition);
+            }
         }
 
         return productRepository.save(existingProduct);
@@ -301,10 +336,6 @@ public class ProductService {
 
         if (product.getSkuProductCode() == null || product.getSkuProductCode().trim().isEmpty()) {
             throw new RuntimeException("SKU/Product Code is required");
-        }
-
-        if (product.getProductGroupId() == null) {
-            throw new RuntimeException("Product group is required");
         }
 
         if (product.getProductWeight() == null || product.getProductWeight().compareTo(new BigDecimal("0.01")) < 0) {

@@ -23,12 +23,15 @@ public class ProductGroupController {
     private ProductGroupService productGroupService;
 
     /**
-     * Get all active product groups
+     * Get all product groups with optional filtering and sorting
      */
     @GetMapping
-    public ResponseEntity<List<ProductGroup>> getAllProductGroups() {
+    public ResponseEntity<List<ProductGroup>> getAllProductGroups(
+            @RequestParam(defaultValue = "true") Boolean activeOnly,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder) {
         try {
-            List<ProductGroup> productGroups = productGroupService.getAllActiveProductGroups();
+            List<ProductGroup> productGroups = productGroupService.getAllProductGroups(activeOnly, sortBy, sortOrder);
             return ResponseEntity.ok(productGroups);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

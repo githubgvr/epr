@@ -1,10 +1,7 @@
 package epr.eprapiservices.entity;
 
 import epr.eprapiservices.Models.BaseModel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 /**
@@ -19,52 +16,25 @@ public class ProductComposition extends BaseModel {
     @Column(name = "productCompositionId")
     private Integer productCompositionId;
 
-    @NotNull(message = "Product ID is required")
-    @Column(name = "productId", nullable = false)
+    @Column(name = "productId")
     private Integer productId;
 
-    @NotNull(message = "Material ID is required")
-    @Column(name = "materialId", nullable = false)
+    @Column(name = "materialId")
     private Integer materialId;
 
-    @NotNull(message = "Product group ID is required")
-    @Column(name = "productGroupId", nullable = false)
+    @Column(name = "productGroupId")
     private Integer productGroupId;
 
-    @NotNull(message = "Weight is required")
-    @DecimalMin(value = "0.01", message = "Weight must be at least 0.01 kg")
-    @Digits(integer = 10, fraction = 3, message = "Weight must be a valid decimal with up to 3 decimal places")
-    @Column(name = "weight", nullable = false, precision = 13, scale = 3)
+    @Column(name = "weight")
     private BigDecimal weight;
 
-    @NotNull(message = "Composition percentage is required")
-    @DecimalMin(value = "0.01", message = "Composition percentage must be at least 0.01%")
-    @DecimalMax(value = "100.0", message = "Composition percentage must not exceed 100%")
-    @Digits(integer = 3, fraction = 2, message = "Composition percentage must be a valid percentage")
-    @Column(name = "compositionPercentage", nullable = false, precision = 5, scale = 2)
+    @Column(name = "compositionPercentage")
     private BigDecimal compositionPercentage;
 
-    @Size(max = 500, message = "Notes must not exceed 500 characters")
-    @Column(name = "notes", length = 500)
+    @Column(name = "notes")
     private String notes;
 
-    // Relationship with Product
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productId", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "certifications", "compositions"})
-    private Product product;
-
-    // Relationship with Material
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "materialId", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Material material;
-
-    // Relationship with ProductGroup
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productGroupId", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private ProductGroup productGroup;
+    // Removed all relationship constraints
 
     // Default constructor
     public ProductComposition() {
@@ -139,29 +109,7 @@ public class ProductComposition extends BaseModel {
         this.notes = notes;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    public ProductGroup getProductGroup() {
-        return productGroup;
-    }
-
-    public void setProductGroup(ProductGroup productGroup) {
-        this.productGroup = productGroup;
-    }
+    // Removed relationship getter/setter methods
 
     @Override
     public String toString() {

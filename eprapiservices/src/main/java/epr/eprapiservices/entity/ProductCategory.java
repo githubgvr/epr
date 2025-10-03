@@ -2,8 +2,6 @@ package epr.eprapiservices.entity;
 
 import epr.eprapiservices.Models.BaseModel;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 /**
  * Entity representing product categories for EPR compliance tracking
@@ -17,20 +15,17 @@ public class ProductCategory extends BaseModel {
     @Column(name = "productCategoryId")
     private Integer productCategoryId;
 
-    @NotBlank(message = "Product category name is required")
-    @Size(max = 100, message = "Product category name must not exceed 100 characters")
-    @Column(name = "productCategoryName", nullable = false, unique = true, length = 100)
+    @Column(name = "productCategoryName")
     private String productCategoryName;
 
-    @Size(max = 500, message = "Description must not exceed 500 characters")
-    @Column(name = "description", length = 500)
+    @Column(name = "description")
     private String description;
-
-    @Column(name = "categoryCode", length = 20)
-    private String categoryCode;
 
     @Column(name = "sortOrder")
     private Integer sortOrder;
+
+    @Column(name = "productGroupId")
+    private Integer productGroupId;
 
     // Default constructor
     public ProductCategory() {
@@ -42,10 +37,11 @@ public class ProductCategory extends BaseModel {
     }
 
     // Constructor with all fields
-    public ProductCategory(String productCategoryName, String description, String categoryCode) {
+    public ProductCategory(String productCategoryName, String description, Integer sortOrder, Integer productGroupId) {
         this.productCategoryName = productCategoryName;
         this.description = description;
-        this.categoryCode = categoryCode;
+        this.sortOrder = sortOrder;
+        this.productGroupId = productGroupId;
     }
 
     // Getters and Setters
@@ -73,14 +69,6 @@ public class ProductCategory extends BaseModel {
         this.description = description;
     }
 
-    public String getCategoryCode() {
-        return categoryCode;
-    }
-
-    public void setCategoryCode(String categoryCode) {
-        this.categoryCode = categoryCode;
-    }
-
     public Integer getSortOrder() {
         return sortOrder;
     }
@@ -89,14 +77,22 @@ public class ProductCategory extends BaseModel {
         this.sortOrder = sortOrder;
     }
 
+    public Integer getProductGroupId() {
+        return productGroupId;
+    }
+
+    public void setProductGroupId(Integer productGroupId) {
+        this.productGroupId = productGroupId;
+    }
+
     @Override
     public String toString() {
         return "ProductCategory{" +
                 "productCategoryId=" + productCategoryId +
                 ", productCategoryName='" + productCategoryName + '\'' +
                 ", description='" + description + '\'' +
-                ", categoryCode='" + categoryCode + '\'' +
                 ", sortOrder=" + sortOrder +
+                ", productGroupId=" + productGroupId +
                 ", isActive=" + getIsActive() +
                 '}';
     }

@@ -27,6 +27,17 @@ public class ProductGroupService {
     }
 
     /**
+     * Get all product groups with optional filtering and sorting
+     */
+    public List<ProductGroup> getAllProductGroups(Boolean activeOnly, String sortBy, String sortOrder) {
+        if (activeOnly) {
+            return productGroupRepository.findAllActiveSorted(sortBy, sortOrder);
+        } else {
+            return productGroupRepository.findAllSorted(sortBy, sortOrder);
+        }
+    }
+
+    /**
      * Get product group by ID
      */
     public Optional<ProductGroup> getProductGroupById(Integer productGroupId) {

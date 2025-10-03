@@ -18,59 +18,67 @@ interface AuthState {
 
 export const useAuth = () => {
   const [authState, setAuthState] = useState<AuthState>({
-    isAuthenticated: false,
-    user: null,
-    loading: true
+    isAuthenticated: true, // Temporarily bypass auth for development
+    user: {
+      id: '1',
+      username: 'developer',
+      email: 'dev@example.com',
+      firstName: 'Developer',
+      lastName: 'User',
+      role: 'admin'
+    },
+    loading: false
   })
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      // Check if user is already logged in (from localStorage)
-      const token = localStorage.getItem('authToken')
-      const userData = localStorage.getItem('userData')
+    // Temporarily disabled for development - authentication is bypassed above
+    // const initializeAuth = async () => {
+    //   // Check if user is already logged in (from localStorage)
+    //   const token = localStorage.getItem('authToken')
+    //   const userData = localStorage.getItem('userData')
 
-      if (token && userData) {
-        try {
-          // Validate token with backend
-          const validationResult = await authService.validateToken(token)
-          if (validationResult.valid) {
-            const user = JSON.parse(userData)
-            setAuthState({
-              isAuthenticated: true,
-              user,
-              loading: false
-            })
-          } else {
-            // Token is invalid, clear storage
-            localStorage.removeItem('authToken')
-            localStorage.removeItem('userData')
-            setAuthState({
-              isAuthenticated: false,
-              user: null,
-              loading: false
-            })
-          }
-        } catch (error) {
-          console.error('Token validation failed:', error)
-          // Token validation failed, clear storage
-          localStorage.removeItem('authToken')
-          localStorage.removeItem('userData')
-          setAuthState({
-            isAuthenticated: false,
-            user: null,
-            loading: false
-          })
-        }
-      } else {
-        setAuthState({
-          isAuthenticated: false,
-          user: null,
-          loading: false
-        })
-      }
-    }
+    //   if (token && userData) {
+    //     try {
+    //       // Validate token with backend
+    //       const validationResult = await authService.validateToken(token)
+    //       if (validationResult.valid) {
+    //         const user = JSON.parse(userData)
+    //         setAuthState({
+    //           isAuthenticated: true,
+    //           user,
+    //           loading: false
+    //         })
+    //       } else {
+    //         // Token is invalid, clear storage
+    //         localStorage.removeItem('authToken')
+    //         localStorage.removeItem('userData')
+    //         setAuthState({
+    //           isAuthenticated: false,
+    //           user: null,
+    //           loading: false
+    //         })
+    //       }
+    //     } catch (error) {
+    //       console.error('Token validation failed:', error)
+    //       // Token validation failed, clear storage
+    //       localStorage.removeItem('authToken')
+    //       localStorage.removeItem('userData')
+    //       setAuthState({
+    //         isAuthenticated: false,
+    //         user: null,
+    //         loading: false
+    //       })
+    //     }
+    //   } else {
+    //     setAuthState({
+    //       isAuthenticated: false,
+    //       user: null,
+    //       loading: false
+    //     })
+    //   }
+    // }
 
-    initializeAuth()
+    // initializeAuth()
   }, [])
 
   const login = async (username: string, password: string): Promise<boolean> => {

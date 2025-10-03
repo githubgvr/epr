@@ -27,27 +27,14 @@ import {
   Assignment as AssignmentIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import vendorService, { VendorFormData } from '../../services/vendorService';
 
-interface VendorFormData {
-  vendorName: string;
-  vendorCode: string;
-  vendorCapacityTonnes: number;
-  vendorType: string;
-  assignedTasks: string;
-  vendorPerformanceMetrics: string;
-  vendorCertificationStatus: 'VALID' | 'EXPIRED';
-  vendorFeedback: string;
-  contactPerson: string;
-  contactEmail: string;
-  contactPhone: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
+interface VendorCreationProps {
+  onCancel?: () => void;
+  onSuccess?: () => void;
 }
 
-const VendorCreation: React.FC = () => {
+const VendorCreation: React.FC<VendorCreationProps> = ({ onCancel, onSuccess }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -145,25 +132,25 @@ const VendorCreation: React.FC = () => {
       errors.assignedTasks = 'Assigned tasks are required';
     }
 
-    if (!formData.contactPerson.trim()) {
+    if (!formData.contactPerson?.trim()) {
       errors.contactPerson = 'Contact person is required';
     }
 
-    if (!formData.contactEmail.trim()) {
+    if (!formData.contactEmail?.trim()) {
       errors.contactEmail = 'Contact email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.contactEmail)) {
+    } else if (formData.contactEmail && !/\S+@\S+\.\S+/.test(formData.contactEmail)) {
       errors.contactEmail = 'Please enter a valid email address';
     }
 
-    if (!formData.address.trim()) {
+    if (!formData.address?.trim()) {
       errors.address = 'Address is required';
     }
 
-    if (!formData.city.trim()) {
+    if (!formData.city?.trim()) {
       errors.city = 'City is required';
     }
 
-    if (!formData.state.trim()) {
+    if (!formData.state?.trim()) {
       errors.state = 'State is required';
     }
 
@@ -178,49 +165,42 @@ const VendorCreation: React.FC = () => {
 
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/vendors', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          isActive: true
-        }),
-      });
+      await vendorService.createVendor(formData);
 
-      if (response.ok) {
-        setSuccess('Vendor created successfully');
-        setError(null);
-        // Reset form
-        setFormData({
-          vendorName: '',
-          vendorCode: '',
-          vendorCapacityTonnes: 0,
-          vendorType: 'RECYCLING',
-          assignedTasks: '',
-          vendorPerformanceMetrics: '',
-          vendorCertificationStatus: 'VALID',
-          vendorFeedback: '',
-          contactPerson: '',
-          contactEmail: '',
-          contactPhone: '',
-          address: '',
-          city: '',
-          state: '',
-          zipCode: '',
-          country: 'India'
-        });
-        setFormErrors({});
-        
-        // Navigate back to vendor management after a short delay
+      setSuccess('Vendor created successfully');
+      setError(null);
+
+      // Reset form
+      setFormData({
+        vendorName: '',
+        vendorCode: '',
+        vendorCapacityTonnes: 0,
+        vendorType: 'RECYCLING',
+        assignedTasks: '',
+        vendorPerformanceMetrics: '',
+        vendorCertificationStatus: 'VALID',
+        vendorFeedback: '',
+        contactPerson: '',
+        contactEmail: '',
+        contactPhone: '',
+        address: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        country: 'India'
+      });
+      setFormErrors({});
+      setActiveStep(0);
+
+      // Call success callback if provided, otherwise navigate
+      if (onSuccess) {
+        setTimeout(() => {
+          onSuccess();
+        }, 1500);
+      } else {
         setTimeout(() => {
           navigate('/vendor/management');
         }, 2000);
-      } else {
-        const errorData = await response.text();
-        setError(errorData || 'Failed to create vendor');
-        setSuccess(null);
       }
     } catch (err) {
       setError('Failed to create vendor');
@@ -557,7 +537,7 @@ const VendorCreation: React.FC = () => {
       {/* Navigation Buttons */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
         <Button
-          onClick={() => navigate('/vendor/management')}
+          onClick={() => onCancel ? onCancel() : navigate('/vendor/management')}
           startIcon={<CancelIcon />}
           disabled={loading}
         >

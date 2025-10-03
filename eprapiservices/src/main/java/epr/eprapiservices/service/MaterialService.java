@@ -2,7 +2,6 @@ package epr.eprapiservices.service;
 
 import epr.eprapiservices.entity.Material;
 import epr.eprapiservices.dao.repository.MaterialRepository;
-import epr.eprapiservices.dao.repository.MaterialTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +15,6 @@ public class MaterialService {
 
     @Autowired
     private MaterialRepository materialRepository;
-
-    @Autowired
-    private MaterialTypeRepository materialTypeRepository;
 
     /**
      * Get all active materials with their material type information
@@ -45,11 +41,11 @@ public class MaterialService {
     }
 
     /**
-     * Get materials by material type ID
+     * Get materials by active status
      */
     @Transactional(readOnly = true)
-    public List<Material> getMaterialsByTypeId(Integer materialTypeId) {
-        return materialRepository.findByMaterialTypeId(materialTypeId);
+    public List<Material> getMaterialsByActiveStatus(Boolean isActive) {
+        return materialRepository.findByIsActive(isActive);
     }
 
     /**
@@ -64,17 +60,15 @@ public class MaterialService {
      * Create a new material
      */
     public Material createMaterial(Material material) {
-        // Validate material type exists
-        if (!materialTypeRepository.existsById(material.getMaterialTypeId())) {
-            throw new IllegalArgumentException("Material type with ID " + material.getMaterialTypeId() + " does not exist");
-        }
-
         // Check if material code already exists
         if (materialRepository.existsByMaterialCodeAndNotMaterialId(material.getMaterialCode(), null)) {
             throw new IllegalArgumentException("Material code '" + material.getMaterialCode() + "' already exists");
         }
 
-        // Set audit fields - BaseModel will handle this automatically via @PrePersist
+        // Set default values
+        if (material.getSortOrder() == null) {
+            material.setSortOrder(1);
+        }
         material.setIsActive(true);
 
         return materialRepository.save(material);
@@ -87,11 +81,6 @@ public class MaterialService {
         Material existingMaterial = materialRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Material with ID " + id + " not found"));
 
-        // Validate material type exists
-        if (!materialTypeRepository.existsById(materialDetails.getMaterialTypeId())) {
-            throw new IllegalArgumentException("Material type with ID " + materialDetails.getMaterialTypeId() + " does not exist");
-        }
-
         // Check if material code already exists (excluding current material)
         if (materialRepository.existsByMaterialCodeAndNotMaterialId(materialDetails.getMaterialCode(), id)) {
             throw new IllegalArgumentException("Material code '" + materialDetails.getMaterialCode() + "' already exists");
@@ -101,7 +90,7 @@ public class MaterialService {
         existingMaterial.setMaterialName(materialDetails.getMaterialName());
         existingMaterial.setMaterialCode(materialDetails.getMaterialCode());
         existingMaterial.setDescription(materialDetails.getDescription());
-        existingMaterial.setMaterialTypeId(materialDetails.getMaterialTypeId());
+        existingMaterial.setSortOrder(materialDetails.getSortOrder());
         // BaseModel will handle updatedDate automatically via @PreUpdate
 
         return materialRepository.save(existingMaterial);
@@ -139,10 +128,10 @@ public class MaterialService {
     }
 
     /**
-     * Count materials by material type
+     * Count all active materials
      */
     @Transactional(readOnly = true)
-    public long countByMaterialTypeId(Integer materialTypeId) {
-        return materialRepository.countByMaterialTypeId(materialTypeId);
+    public long countActiveMaterials() {
+        return materialRepository.findByIsActive(true).size();
     }
 }

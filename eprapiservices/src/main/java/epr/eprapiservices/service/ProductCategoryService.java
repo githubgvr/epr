@@ -27,6 +27,17 @@ public class ProductCategoryService {
     }
 
     /**
+     * Get all product categories with filtering and sorting
+     */
+    public List<ProductCategory> getAllProductCategories(Boolean activeOnly, String sortBy, String sortOrder) {
+        if (activeOnly) {
+            return productCategoryRepository.findAllActiveSorted(sortBy, sortOrder);
+        } else {
+            return productCategoryRepository.findAllSorted(sortBy, sortOrder);
+        }
+    }
+
+    /**
      * Get product category by ID
      */
     public Optional<ProductCategory> getProductCategoryById(Integer productCategoryId) {
@@ -49,12 +60,7 @@ public class ProductCategoryService {
             throw new RuntimeException("Product category name already exists: " + productCategory.getProductCategoryName());
         }
 
-        // Check if category code already exists (if provided)
-        if (productCategory.getCategoryCode() != null && !productCategory.getCategoryCode().trim().isEmpty()) {
-            if (isCategoryCodeExists(productCategory.getCategoryCode())) {
-                throw new RuntimeException("Category code already exists: " + productCategory.getCategoryCode());
-            }
-        }
+        // Category code validation removed - no longer using codes
 
         // Set sort order if not provided
         if (productCategory.getSortOrder() == null) {
@@ -81,21 +87,11 @@ public class ProductCategoryService {
                 }
             }
 
-            // Check if category code is being changed and if it already exists
-            if (productCategoryDetails.getCategoryCode() != null && !productCategoryDetails.getCategoryCode().trim().isEmpty()) {
-                if (!productCategoryDetails.getCategoryCode().equals(existingCategory.getCategoryCode())) {
-                    if (productCategoryRepository.existsByCategoryCodeAndProductCategoryIdNot(
-                            productCategoryDetails.getCategoryCode(), productCategoryId)) {
-                        throw new RuntimeException("Category code already exists: " + productCategoryDetails.getCategoryCode());
-                    }
-                }
-            }
-
             // Update fields
             existingCategory.setProductCategoryName(productCategoryDetails.getProductCategoryName());
             existingCategory.setDescription(productCategoryDetails.getDescription());
-            existingCategory.setCategoryCode(productCategoryDetails.getCategoryCode());
             existingCategory.setSortOrder(productCategoryDetails.getSortOrder());
+            existingCategory.setProductGroupId(productCategoryDetails.getProductGroupId());
 
             return productCategoryRepository.save(existingCategory);
         } else {
@@ -138,12 +134,7 @@ public class ProductCategoryService {
         return productCategoryRepository.existsByProductCategoryNameIgnoreCase(categoryName);
     }
 
-    /**
-     * Check if category code exists
-     */
-    public boolean isCategoryCodeExists(String categoryCode) {
-        return productCategoryRepository.existsByCategoryCode(categoryCode);
-    }
+    // Category code methods removed - no longer using codes
 
     /**
      * Check if category name is available for update
@@ -155,15 +146,7 @@ public class ProductCategoryService {
         return !productCategoryRepository.existsByProductCategoryNameIgnoreCaseAndProductCategoryIdNot(categoryName, excludeId);
     }
 
-    /**
-     * Check if category code is available for update
-     */
-    public boolean isCategoryCodeAvailable(String categoryCode, Integer excludeId) {
-        if (excludeId == null) {
-            return !isCategoryCodeExists(categoryCode);
-        }
-        return !productCategoryRepository.existsByCategoryCodeAndProductCategoryIdNot(categoryCode, excludeId);
-    }
+    // Category code availability check removed - no longer using codes
 
     /**
      * Get count of active categories
@@ -208,9 +191,7 @@ public class ProductCategoryService {
             return false;
         }
 
-        if (productCategory.getCategoryCode() != null && productCategory.getCategoryCode().length() > 20) {
-            return false;
-        }
+        // Category code validation removed - no longer using codes
 
         return true;
     }

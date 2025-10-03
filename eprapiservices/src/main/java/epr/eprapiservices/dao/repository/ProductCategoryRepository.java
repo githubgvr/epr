@@ -43,21 +43,7 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
      */
     boolean existsByProductCategoryNameIgnoreCase(String productCategoryName);
 
-    /**
-     * Find product category by category code
-     */
-    Optional<ProductCategory> findByCategoryCode(String categoryCode);
-
-    /**
-     * Check if category code exists (excluding specific ID)
-     */
-    @Query("SELECT COUNT(pc) > 0 FROM ProductCategory pc WHERE pc.categoryCode = :code AND pc.productCategoryId != :id")
-    boolean existsByCategoryCodeAndProductCategoryIdNot(@Param("code") String categoryCode, @Param("id") Integer id);
-
-    /**
-     * Check if category code exists
-     */
-    boolean existsByCategoryCode(String categoryCode);
+    // Category code methods removed - no longer using codes
 
     /**
      * Count active product categories
@@ -91,4 +77,26 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
      */
     @Query("SELECT COALESCE(MAX(pc.sortOrder), 0) + 1 FROM ProductCategory pc WHERE pc.isActive = true")
     Integer getNextSortOrder();
+
+    /**
+     * Find all active product categories with sorting
+     */
+    @Query("SELECT pc FROM ProductCategory pc WHERE pc.isActive = true ORDER BY " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'asc' THEN pc.productCategoryName END ASC, " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'desc' THEN pc.productCategoryName END DESC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'asc' THEN pc.sortOrder END ASC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'desc' THEN pc.sortOrder END DESC, " +
+           "pc.productCategoryName ASC")
+    List<ProductCategory> findAllActiveSorted(@Param("sortBy") String sortBy, @Param("sortOrder") String sortOrder);
+
+    /**
+     * Find all product categories with sorting
+     */
+    @Query("SELECT pc FROM ProductCategory pc ORDER BY " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'asc' THEN pc.productCategoryName END ASC, " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'desc' THEN pc.productCategoryName END DESC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'asc' THEN pc.sortOrder END ASC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'desc' THEN pc.sortOrder END DESC, " +
+           "pc.productCategoryName ASC")
+    List<ProductCategory> findAllSorted(@Param("sortBy") String sortBy, @Param("sortOrder") String sortOrder);
 }

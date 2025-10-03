@@ -85,19 +85,6 @@ public class ProductController {
     }
 
     /**
-     * Get products by group
-     */
-    @GetMapping("/group/{groupId}")
-    public ResponseEntity<List<Product>> getProductsByGroup(@PathVariable Integer groupId) {
-        try {
-            List<Product> products = productService.getProductsByGroup(groupId);
-            return ResponseEntity.ok(products);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to retrieve products by group: " + e.getMessage());
-        }
-    }
-
-    /**
      * Create new product
      */
     @PostMapping

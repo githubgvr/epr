@@ -61,12 +61,12 @@ public class MaterialController {
     }
 
     /**
-     * Get materials by material type ID
+     * Get materials by active status
      */
-    @GetMapping("/type/{materialTypeId}")
-    public ResponseEntity<List<Material>> getMaterialsByTypeId(@PathVariable Integer materialTypeId) {
+    @GetMapping("/active/{isActive}")
+    public ResponseEntity<List<Material>> getMaterialsByActiveStatus(@PathVariable Boolean isActive) {
         try {
-            List<Material> materials = materialService.getMaterialsByTypeId(materialTypeId);
+            List<Material> materials = materialService.getMaterialsByActiveStatus(isActive);
             return ResponseEntity.ok(materials);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -160,12 +160,12 @@ public class MaterialController {
     }
 
     /**
-     * Count materials by material type
+     * Count active materials
      */
-    @GetMapping("/count/type/{materialTypeId}")
-    public ResponseEntity<Long> countByMaterialTypeId(@PathVariable Integer materialTypeId) {
+    @GetMapping("/count/active")
+    public ResponseEntity<Long> countActiveMaterials() {
         try {
-            long count = materialService.countByMaterialTypeId(materialTypeId);
+            long count = materialService.countActiveMaterials();
             return ResponseEntity.ok(count);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

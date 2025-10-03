@@ -27,6 +27,28 @@ public interface ProductGroupRepository extends JpaRepository<ProductGroup, Inte
     List<ProductGroup> findAllActive();
 
     /**
+     * Find all active product groups with sorting
+     */
+    @Query("SELECT pg FROM ProductGroup pg WHERE pg.isActive = true ORDER BY " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'asc' THEN pg.productGroupName END ASC, " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'desc' THEN pg.productGroupName END DESC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'asc' THEN pg.sortOrder END ASC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'desc' THEN pg.sortOrder END DESC, " +
+           "pg.productGroupName ASC")
+    List<ProductGroup> findAllActiveSorted(@Param("sortBy") String sortBy, @Param("sortOrder") String sortOrder);
+
+    /**
+     * Find all product groups (active and inactive) with sorting
+     */
+    @Query("SELECT pg FROM ProductGroup pg ORDER BY " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'asc' THEN pg.productGroupName END ASC, " +
+           "CASE WHEN :sortBy = 'name' AND :sortOrder = 'desc' THEN pg.productGroupName END DESC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'asc' THEN pg.sortOrder END ASC, " +
+           "CASE WHEN :sortBy = 'sortOrder' AND :sortOrder = 'desc' THEN pg.sortOrder END DESC, " +
+           "pg.productGroupName ASC")
+    List<ProductGroup> findAllSorted(@Param("sortBy") String sortBy, @Param("sortOrder") String sortOrder);
+
+    /**
      * Find product groups by name containing (case insensitive)
      */
     @Query("SELECT pg FROM ProductGroup pg WHERE LOWER(pg.productGroupName) LIKE LOWER(CONCAT('%', :name, '%')) AND pg.isActive = true")

@@ -1,13 +1,12 @@
 package epr.eprapiservices.entity;
 
 import epr.eprapiservices.Models.BaseModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Entity representing products for EPR compliance tracking
@@ -21,61 +20,28 @@ public class Product extends BaseModel {
     @Column(name = "productId")
     private Integer productId;
 
-    @NotBlank(message = "Product name is required")
-    @Size(max = 100, message = "Product name must not exceed 100 characters")
-    @Column(name = "productName", nullable = false, length = 100)
+    @Column(name = "productName")
     private String productName;
 
-    @NotBlank(message = "SKU/Product Code is required")
-    @Size(max = 50, message = "SKU/Product Code must not exceed 50 characters")
-    @Column(name = "skuProductCode", nullable = false, length = 50, unique = true)
+    @Column(name = "skuProductCode")
     private String skuProductCode;
 
-    @NotNull(message = "Product group is required")
-    @Column(name = "productGroupId", nullable = false)
-    private Integer productGroupId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productGroupId", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private ProductGroup productGroup;
-
-    @Column(name = "productCategoryId")
-    private Integer productCategoryId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productCategoryId", insertable = false, updatable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private ProductCategory productCategory;
-
-    @Size(max = 250, message = "Product description must not exceed 250 characters")
-    @Column(name = "productDescription", length = 250)
+    @Column(name = "productDescription")
     private String productDescription;
 
-    @NotNull(message = "Product weight is required")
-    @DecimalMin(value = "0.01", message = "Product weight must be at least 0.01 kg")
-    @Digits(integer = 10, fraction = 3, message = "Product weight must be a valid decimal with up to 3 decimal places")
-    @Column(name = "productWeight", nullable = false, precision = 13, scale = 3)
+    @Column(name = "productWeight")
     private BigDecimal productWeight;
 
-    @NotNull(message = "Product lifecycle duration is required")
-    @Min(value = 1, message = "Product lifecycle duration must be at least 1 year")
-    @Max(value = 50, message = "Product lifecycle duration must not exceed 50 years")
-    @Column(name = "productLifecycleDuration", nullable = false)
+    @Column(name = "productLifecycleDuration")
     private Integer productLifecycleDuration;
 
-    @NotNull(message = "Compliance target is required")
-    @DecimalMin(value = "0.0", message = "Compliance target must be at least 0%")
-    @DecimalMax(value = "100.0", message = "Compliance target must not exceed 100%")
-    @Digits(integer = 3, fraction = 2, message = "Compliance target must be a valid percentage")
-    @Column(name = "complianceTargetPercentage", nullable = false, precision = 5, scale = 2)
+    @Column(name = "complianceTargetPercentage")
     private BigDecimal complianceTargetPercentage;
 
-    @Size(max = 500, message = "Regulatory certifications path must not exceed 500 characters")
-    @Column(name = "regulatoryCertificationsPath", length = 500)
+    @Column(name = "regulatoryCertificationsPath")
     private String regulatoryCertificationsPath;
 
-    @Column(name = "registrationDate", nullable = false)
+    @Column(name = "registrationDate")
     private LocalDate registrationDate;
 
     @Column(name = "product_manufacturing_date")
@@ -84,9 +50,9 @@ public class Product extends BaseModel {
     @Column(name = "product_expiry_date")
     private LocalDate productExpiryDate;
 
-    // Relationship with ProductCertifications
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductCertification> certifications = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ProductComponentComposition> componentCompositions = new ArrayList<>();
 
     // Default constructor
     public Product() {
@@ -94,13 +60,12 @@ public class Product extends BaseModel {
     }
 
     // Constructor with required fields
-    public Product(String productName, String skuProductCode, Integer productGroupId,
+    public Product(String productName, String skuProductCode,
                    BigDecimal productWeight, Integer productLifecycleDuration,
                    BigDecimal complianceTargetPercentage) {
         this();
         this.productName = productName;
         this.skuProductCode = skuProductCode;
-        this.productGroupId = productGroupId;
         this.productWeight = productWeight;
         this.productLifecycleDuration = productLifecycleDuration;
         this.complianceTargetPercentage = complianceTargetPercentage;
@@ -129,38 +94,6 @@ public class Product extends BaseModel {
 
     public void setSkuProductCode(String skuProductCode) {
         this.skuProductCode = skuProductCode;
-    }
-
-    public Integer getProductGroupId() {
-        return productGroupId;
-    }
-
-    public void setProductGroupId(Integer productGroupId) {
-        this.productGroupId = productGroupId;
-    }
-
-    public ProductGroup getProductGroup() {
-        return productGroup;
-    }
-
-    public void setProductGroup(ProductGroup productGroup) {
-        this.productGroup = productGroup;
-    }
-
-    public Integer getProductCategoryId() {
-        return productCategoryId;
-    }
-
-    public void setProductCategoryId(Integer productCategoryId) {
-        this.productCategoryId = productCategoryId;
-    }
-
-    public ProductCategory getProductCategory() {
-        return productCategory;
-    }
-
-    public void setProductCategory(ProductCategory productCategory) {
-        this.productCategory = productCategory;
     }
 
     public String getProductDescription() {
@@ -227,28 +160,23 @@ public class Product extends BaseModel {
         this.productExpiryDate = productExpiryDate;
     }
 
-    public List<ProductCertification> getCertifications() {
-        return certifications;
+    public List<ProductComponentComposition> getComponentCompositions() {
+        return componentCompositions;
     }
 
-    public void setCertifications(List<ProductCertification> certifications) {
-        this.certifications = certifications;
+    public void setComponentCompositions(List<ProductComponentComposition> componentCompositions) {
+        this.componentCompositions = componentCompositions;
     }
 
-    // Helper method to add a certification
-    public void addCertification(ProductCertification certification) {
-        if (this.certifications == null) {
-            this.certifications = new ArrayList<>();
-        }
-        this.certifications.add(certification);
-        certification.setProductId(this.productId);
+    // Helper methods
+    public void addComponentComposition(ProductComponentComposition composition) {
+        componentCompositions.add(composition);
+        composition.setProduct(this);
     }
 
-    // Helper method to remove a certification
-    public void removeCertification(ProductCertification certification) {
-        if (this.certifications != null) {
-            this.certifications.remove(certification);
-        }
+    public void removeComponentComposition(ProductComponentComposition composition) {
+        componentCompositions.remove(composition);
+        composition.setProduct(null);
     }
 
     @Override
@@ -257,7 +185,6 @@ public class Product extends BaseModel {
                 "productId=" + productId +
                 ", productName='" + productName + '\'' +
                 ", skuProductCode='" + skuProductCode + '\'' +
-                ", productGroupId=" + productGroupId +
                 ", productWeight=" + productWeight +
                 ", productLifecycleDuration=" + productLifecycleDuration +
                 ", complianceTargetPercentage=" + complianceTargetPercentage +

@@ -41,24 +41,19 @@ public interface ProductCompositionRepository extends JpaRepository<ProductCompo
                                                              @Param("materialId") Integer materialId);
 
     /**
-     * Find all active compositions with product and material details
+     * Find all active compositions (relationships removed)
      */
     @Query("SELECT pc FROM ProductComposition pc " +
-           "LEFT JOIN FETCH pc.product p " +
-           "LEFT JOIN FETCH pc.material m " +
-           "LEFT JOIN FETCH pc.productGroup pg " +
            "WHERE pc.isActive = true " +
-           "ORDER BY p.productName, m.materialName")
+           "ORDER BY pc.productId, pc.materialId")
     List<ProductComposition> findAllActiveWithDetails();
 
     /**
-     * Find compositions by product with material details
+     * Find compositions by product (relationships removed)
      */
     @Query("SELECT pc FROM ProductComposition pc " +
-           "LEFT JOIN FETCH pc.material m " +
-           "LEFT JOIN FETCH pc.productGroup pg " +
            "WHERE pc.productId = :productId AND pc.isActive = true " +
-           "ORDER BY m.materialName")
+           "ORDER BY pc.materialId")
     List<ProductComposition> findByProductIdWithDetails(@Param("productId") Integer productId);
 
     /**

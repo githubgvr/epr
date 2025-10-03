@@ -2,7 +2,6 @@ package epr.eprapiservices.entity;
 
 import epr.eprapiservices.Models.BaseModel;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 /**
@@ -17,75 +16,53 @@ public class Vendor extends BaseModel {
     @Column(name = "vendorId")
     private Integer vendorId;
 
-    @NotBlank(message = "Vendor name is required")
-    @Size(max = 100, message = "Vendor name must not exceed 100 characters")
-    @Column(name = "vendorName", nullable = false, length = 100)
+    @Column(name = "vendorName")
     private String vendorName;
 
-    @NotBlank(message = "Vendor ID is required")
-    @Size(max = 50, message = "Vendor ID must not exceed 50 characters")
-    @Column(name = "vendorCode", nullable = false, unique = true, length = 50)
+    @Column(name = "vendorCode")
     private String vendorCode;
 
-    @NotNull(message = "Vendor capacity is required")
-    @DecimalMin(value = "1.0", message = "Vendor capacity must be at least 1 tonne")
-    @Digits(integer = 10, fraction = 2, message = "Vendor capacity must be a valid decimal")
-    @Column(name = "vendorCapacityTonnes", nullable = false, precision = 12, scale = 2)
+    @Column(name = "vendorCapacityTonnes")
     private BigDecimal vendorCapacityTonnes;
 
-    @NotBlank(message = "Assigned tasks are required")
-    @Size(max = 250, message = "Assigned tasks must not exceed 250 characters")
-    @Column(name = "assignedTasks", nullable = false, length = 250)
+    @Column(name = "assignedTasks")
     private String assignedTasks;
 
-    @Column(name = "vendorPerformanceMetrics", columnDefinition = "TEXT")
-    private String vendorPerformanceMetrics; // JSON stored as text
+    @Column(name = "vendorPerformanceMetrics")
+    private String vendorPerformanceMetrics;
 
-    @NotNull(message = "Vendor certification status is required")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "vendorCertificationStatus", nullable = false)
-    private CertificationStatus vendorCertificationStatus;
+    @Column(name = "vendorCertificationStatus")
+    private String vendorCertificationStatus;
 
-    @Size(max = 250, message = "Vendor feedback must not exceed 250 characters")
-    @Column(name = "vendorFeedback", length = 250)
+    @Column(name = "vendorFeedback")
     private String vendorFeedback;
 
-    @Size(max = 100, message = "Contact person name must not exceed 100 characters")
-    @Column(name = "contactPerson", length = 100)
+    @Column(name = "contactPerson")
     private String contactPerson;
 
-    @Email(message = "Contact email must be valid")
-    @Size(max = 100, message = "Contact email must not exceed 100 characters")
-    @Column(name = "contactEmail", length = 100)
+    @Column(name = "contactEmail")
     private String contactEmail;
 
-    @Size(max = 20, message = "Contact phone must not exceed 20 characters")
-    @Column(name = "contactPhone", length = 20)
+    @Column(name = "contactPhone")
     private String contactPhone;
 
-    @Size(max = 200, message = "Address must not exceed 200 characters")
-    @Column(name = "address", length = 200)
+    @Column(name = "address")
     private String address;
 
-    @Size(max = 50, message = "City must not exceed 50 characters")
-    @Column(name = "city", length = 50)
+    @Column(name = "city")
     private String city;
 
-    @Size(max = 50, message = "State must not exceed 50 characters")
-    @Column(name = "state", length = 50)
+    @Column(name = "state")
     private String state;
 
-    @Size(max = 10, message = "Zip code must not exceed 10 characters")
-    @Column(name = "zipCode", length = 10)
+    @Column(name = "zipCode")
     private String zipCode;
 
-    @Size(max = 50, message = "Country must not exceed 50 characters")
-    @Column(name = "country", length = 50)
+    @Column(name = "country")
     private String country;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "vendorType")
-    private VendorType vendorType;
+    private String vendorType;
 
     // Enums
     public enum CertificationStatus {
@@ -98,8 +75,8 @@ public class Vendor extends BaseModel {
 
     // Default constructor
     public Vendor() {
-        this.vendorCertificationStatus = CertificationStatus.VALID;
-        this.vendorType = VendorType.RECYCLING;
+        this.vendorCertificationStatus = "VALID";
+        this.vendorType = "RECYCLING";
         this.country = "India";
     }
 
@@ -161,11 +138,11 @@ public class Vendor extends BaseModel {
         this.vendorPerformanceMetrics = vendorPerformanceMetrics;
     }
 
-    public CertificationStatus getVendorCertificationStatus() {
+    public String getVendorCertificationStatus() {
         return vendorCertificationStatus;
     }
 
-    public void setVendorCertificationStatus(CertificationStatus vendorCertificationStatus) {
+    public void setVendorCertificationStatus(String vendorCertificationStatus) {
         this.vendorCertificationStatus = vendorCertificationStatus;
     }
 
@@ -241,11 +218,11 @@ public class Vendor extends BaseModel {
         this.country = country;
     }
 
-    public VendorType getVendorType() {
+    public String getVendorType() {
         return vendorType;
     }
 
-    public void setVendorType(VendorType vendorType) {
+    public void setVendorType(String vendorType) {
         this.vendorType = vendorType;
     }
 

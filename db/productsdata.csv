@@ -1,0 +1,162 @@
+﻿ProductGroup,ProductCategory,ProductType,Product Model No,Product Name,Component,Material,Material Composition (%),Weight (kg) Approx.
+Electronics,TV,32',LG-32Asia123,LG TV,Screen Panel,"Glass (70%), LED/QD Film (30%)",40 - 50,1.0 - 1.5
+Electronics,TV,32',LG-32Asia124,,Backlight Unit,"LED Diodes, Plastic",10 - 15,0.3 - 0.5
+Electronics,TV,32',LG-32Asia125,,Circuit Board,"Silicon ICs, Copper Circuit",5 - 8,0.2 - 0.4
+Electronics,TV,32',LG-32Asia126,,Frame,"Aluminum, Steel",5 - 7,0.3 - 0.5
+Electronics,TV,32',,,Plastic Housing,ABS/Polycarbonate Plastic,10 - 15,0.3 - 0.6
+Electronics,TV,32',,,Metal Parts,"Steel, Aluminum Frames",3 - 5,0.2 - 0.4
+Electronics,TV,32',,,Connectors,"Copper, Plastic",1 - 2,0.1 - 0.2
+Electronics,TV,32',,,Speakers,"Plastic, Metal Cone",1 - 2,0.1 - 0.2
+Electronics,TV,32',,,Power Supply,"Electronic Parts, Plastic",3 - 5,0.3 - 0.5
+Electronics,TV,43',,,Screen Panel,"Glass (70%), LED/QD Film (30%)",40 - 50,1.0 - 1.5
+Electronics,TV,43',,,Backlight Unit,"LED Diodes, Plastic",10 - 15,0.3 - 0.5
+Electronics,TV,43',,,Circuit Board,"Silicon ICs, Copper Circuit",5 - 8,0.2 - 0.4
+Electronics,TV,43',,,Frame,"Aluminum, Steel",5 - 7,0.3 - 0.5
+Electronics,TV,43',,,Plastic Housing,ABS/Polycarbonate Plastic,10 - 15,0.3 - 0.6
+Electronics,TV,43',,,Metal Parts,"Steel, Aluminum Frames",3 - 5,0.2 - 0.4
+Electronics,TV,43',,,Connectors,"Copper, Plastic",1 - 2,0.1 - 0.2
+Electronics,TV,43',,,Speakers,"Plastic, Metal Cone",1 - 2,0.1 - 0.2
+Electronics,TV,43',,,Power Supply,"Electronic Parts, Plastic",3 - 5,0.3 - 0.5
+Electronics,TV,50',,,Screen Panel,"Glass (70%), LED/QD Film (30%)",40 - 50,1.0 - 1.5
+Electronics,TV,50',,,Backlight Unit,"LED Diodes, Plastic",10 - 15,0.3 - 0.5
+Electronics,TV,50',,,Circuit Board,"Silicon ICs, Copper Circuit",5 - 8,0.2 - 0.4
+Electronics,TV,50',,,Frame,"Aluminum, Steel",5 - 7,0.3 - 0.5
+Electronics,TV,50',,,Plastic Housing,ABS/Polycarbonate Plastic,10 - 15,0.3 - 0.6
+Electronics,TV,50',,,Metal Parts,"Steel, Aluminum Frames",3 - 5,0.2 - 0.4
+Electronics,TV,50',,,Connectors,"Copper, Plastic",1 - 2,0.1 - 0.2
+Electronics,TV,50',,,Speakers,"Plastic, Metal Cone",1 - 2,0.1 - 0.2
+Electronics,TV,50',,,Power Supply,"Electronic Parts, Plastic",3 - 5,0.3 - 0.5
+Electronics,TV,55',,,Screen Panel,"Glass (70%), LED/QD Film (30%)",40 - 50,1.0 - 1.5
+Electronics,TV,55',,,Backlight Unit,"LED Diodes, Plastic",10 - 15,0.3 - 0.5
+Electronics,TV,55',,,Circuit Board,"Silicon ICs, Copper Circuit",5 - 8,0.2 - 0.4
+Electronics,TV,55',,,Frame,"Aluminum, Steel",5 - 7,0.3 - 0.5
+Electronics,TV,55',,,Plastic Housing,ABS/Polycarbonate Plastic,10 - 15,0.3 - 0.6
+Electronics,TV,55',,,Metal Parts,"Steel, Aluminum Frames",3 - 5,0.2 - 0.4
+Electronics,TV,55',,,Connectors,"Copper, Plastic",1 - 2,0.1 - 0.2
+Electronics,TV,55',,,Speakers,"Plastic, Metal Cone",1 - 2,0.1 - 0.2
+Electronics,TV,55',,,Power Supply,"Electronic Parts, Plastic",3 - 5,0.3 - 0.5
+Electronics,TV,65',,,Screen Panel,"Glass (70%), LED/QD Film (30%)",40 - 50,1.0 - 1.5
+Electronics,TV,65',,,Backlight Unit,"LED Diodes, Plastic",10 - 15,0.3 - 0.5
+Electronics,TV,65',,,Circuit Board,"Silicon ICs, Copper Circuit",5 - 8,0.2 - 0.4
+Electronics,TV,65',,,Frame,"Aluminum, Steel",5 - 7,0.3 - 0.5
+Electronics,TV,65',,,Plastic Housing,ABS/Polycarbonate Plastic,10 - 15,0.3 - 0.6
+Electronics,TV,65',,,Metal Parts,"Steel, Aluminum Frames",3 - 5,0.2 - 0.4
+Electronics,TV,65',,,Connectors,"Copper, Plastic",1 - 2,0.1 - 0.2
+Electronics,TV,65',,,Speakers,"Plastic, Metal Cone",1 - 2,0.1 - 0.2
+Electronics,TV,65',,,Power Supply,"Electronic Parts, Plastic",3 - 5,0.3 - 0.5
+Electronics,TV,75',,,Screen Panel,"Glass (70%), LED/QD Film (30%)",40 - 50,1.0 - 1.5
+Electronics,TV,75',,,Backlight Unit,"LED Diodes, Plastic",10 - 15,0.3 - 0.5
+Electronics,TV,75',,,Circuit Board,"Silicon ICs, Copper Circuit",5 - 8,0.2 - 0.4
+Electronics,TV,75',,,Frame,"Aluminum, Steel",5 - 7,0.3 - 0.5
+Electronics,TV,75',,,Plastic Housing,ABS/Polycarbonate Plastic,10 - 15,0.3 - 0.6
+Electronics,TV,75',,,Metal Parts,"Steel, Aluminum Frames",3 - 5,0.2 - 0.4
+Electronics,TV,75',,,Connectors,"Copper, Plastic",1 - 2,0.1 - 0.2
+Electronics,TV,75',,,Speakers,"Plastic, Metal Cone",1 - 2,0.1 - 0.2
+Electronics,TV,75',,,Power Supply,"Electronic Parts, Plastic",3 - 5,0.3 - 0.5
+Packaging,TV Packaging,32',,,Outer Carton,Corrugated Cardboard,50-60,1
+Packaging,TV Packaging,32',,,Foam Padding,Polyurethane Foam,20-30,0.7
+Packaging,TV Packaging,32',,,Plastic Wrap,Polyethylene,5-10,0.2
+Packaging,TV Packaging,32',,,Tape,BoPET Tape,3-5,0.1
+Packaging,TV Packaging,32',,,Strapping Band,Polypropylene,5-8,0.2
+Packaging,TV Packaging,32',,,Corner Protectors,Expanded Polystyrene,10-15,0.4
+Packaging,TV Packaging,43',,,Outer Carton,Corrugated Cardboard,50-60,1
+Packaging,TV Packaging,43',,,Foam Padding,Polyurethane Foam,20-30,0.7
+Packaging,TV Packaging,43',,,Plastic Wrap,Polyethylene,5-10,0.2
+Packaging,TV Packaging,43',,,Tape,BoPET Tape,3-5,0.1
+Packaging,TV Packaging,43',,,Strapping Band,Polypropylene,5-8,0.2
+Packaging,TV Packaging,43',,,Corner Protectors,Expanded Polystyrene,10-15,0.4
+Packaging,TV Packaging,50',,,Outer Carton,Corrugated Cardboard,50-60,1
+Packaging,TV Packaging,50',,,Foam Padding,Polyurethane Foam,20-30,0.7
+Packaging,TV Packaging,50',,,Plastic Wrap,Polyethylene,5-10,0.2
+Packaging,TV Packaging,50',,,Tape,BoPET Tape,3-5,0.1
+Packaging,TV Packaging,50',,,Strapping Band,Polypropylene,5-8,0.2
+Packaging,TV Packaging,50',,,Corner Protectors,Expanded Polystyrene,10-15,0.4
+Packaging,TV Packaging,55',,,Outer Carton,Corrugated Cardboard,50-60,1
+Packaging,TV Packaging,55',,,Foam Padding,Polyurethane Foam,20-30,0.7
+Packaging,TV Packaging,55',,,Plastic Wrap,Polyethylene,5-10,0.2
+Packaging,TV Packaging,55',,,Tape,BoPET Tape,3-5,0.1
+Packaging,TV Packaging,55',,,Strapping Band,Polypropylene,5-8,0.2
+Packaging,TV Packaging,55',,,Corner Protectors,Expanded Polystyrene,10-15,0.4
+Packaging,TV Packaging,65',,,Outer Carton,Corrugated Cardboard,50-60,1
+Packaging,TV Packaging,65',,,Foam Padding,Polyurethane Foam,20-30,0.7
+Packaging,TV Packaging,65',,,Plastic Wrap,Polyethylene,5-10,0.2
+Packaging,TV Packaging,65',,,Tape,BoPET Tape,3-5,0.1
+Packaging,TV Packaging,65',,,Strapping Band,Polypropylene,5-8,0.2
+Packaging,TV Packaging,65',,,Corner Protectors,Expanded Polystyrene,10-15,0.4
+Packaging,TV Packaging,75',,,Outer Carton,Corrugated Cardboard,50-60,1
+Packaging,TV Packaging,75',,,Foam Padding,Polyurethane Foam,20-30,0.7
+Packaging,TV Packaging,75',,,Plastic Wrap,Polyethylene,5-10,0.2
+Packaging,TV Packaging,75',,,Tape,BoPET Tape,3-5,0.1
+Packaging,TV Packaging,75',,,Strapping Band,Polypropylene,5-8,0.2
+Packaging,TV Packaging,75',,,Corner Protectors,Expanded Polystyrene,10-15,0.4
+Electronics,Washing Machine,5-7kg Front Load,,,Tub,Galvanized Steel,15 - 25,8 - 12
+Electronics,Washing Machine,5-7kg Front Load,,,Motor,"Copper, Steel",8 - 12,3 - 5
+Electronics,Washing Machine,5-7kg Front Load,,,Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Washing Machine,5-7kg Front Load,,,Frame,"Steel, Aluminum",7 - 10,4 - 5
+Electronics,Washing Machine,5-7kg Front Load,,,Plastic Housing,ABS Plastic,6 - 8,3 - 4
+Electronics,Washing Machine,5-7kg Front Load,,,Connectors,"Copper, Plastic",1 - 3,0.2 - 0.5
+Electronics,Washing Machine,5-7kg Front Load,,,Water Pump,"Plastic, Rubber",3 - 5,2 - 4
+Electronics,Washing Machine,5-7kg Front Load,,,Control Knobs,Plastic,1 - 2,0.5 - 1
+Electronics,Washing Machine,8-10kg Front Load,,,Drum,Stainless Steel,35 - 45,12 - 18
+Electronics,Washing Machine,8-10kg Front Load,,,Tub,Galvanized Steel,15 - 25,8 - 12
+Electronics,Washing Machine,8-10kg Front Load,,,Motor,"Copper, Steel",8 - 12,3 - 5
+Electronics,Washing Machine,8-10kg Front Load,,,Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Washing Machine,8-10kg Front Load,,,Frame,"Steel, Aluminum",7 - 10,4 - 5
+Electronics,Washing Machine,8-10kg Front Load,,,Plastic Housing,ABS Plastic,6 - 8,3 - 4
+Electronics,Washing Machine,8-10kg Front Load,,,Connectors,"Copper, Plastic",1 - 3,0.2 - 0.5
+Electronics,Washing Machine,8-10kg Front Load,,,Water Pump,"Plastic, Rubber",3 - 5,2 - 4
+Electronics,Washing Machine,8-10kg Front Load,,,Control Knobs,Plastic,1 - 2,0.5 - 1
+Electronics,Washing Machine,5-7kg Top Load,,,Drum,Stainless Steel,35 - 45,12 - 18
+Electronics,Washing Machine,5-7kg Top Load,,,Tub,Galvanized Steel,15 - 25,8 - 12
+Electronics,Washing Machine,5-7kg Top Load,,,Motor,"Copper, Steel",8 - 12,3 - 5
+Electronics,Washing Machine,5-7kg Top Load,,,Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Washing Machine,5-7kg Top Load,,,Frame,"Steel, Aluminum",7 - 10,4 - 5
+Electronics,Washing Machine,5-7kg Top Load,,,Plastic Housing,ABS Plastic,6 - 8,3 - 4
+Electronics,Washing Machine,5-7kg Top Load,,,Connectors,"Copper, Plastic",1 - 3,0.2 - 0.5
+Electronics,Washing Machine,5-7kg Top Load,,,Water Pump,"Plastic, Rubber",3 - 5,2 - 4
+Electronics,Washing Machine,5-7kg Top Load,,,Control Knobs,Plastic,1 - 2,0.5 - 1
+Electronics,Washing Machine,8-10kg Top Load,,,Drum,Stainless Steel,35 - 45,12 - 18
+Electronics,Washing Machine,8-10kg Top Load,,,Tub,Galvanized Steel,15 - 25,8 - 12
+Electronics,Washing Machine,8-10kg Top Load,,,Motor,"Copper, Steel",8 - 12,3 - 5
+Electronics,Washing Machine,8-10kg Top Load,,,Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Washing Machine,8-10kg Top Load,,,Frame,"Steel, Aluminum",7 - 10,4 - 5
+Electronics,Washing Machine,8-10kg Top Load,,,Plastic Housing,ABS Plastic,6 - 8,3 - 4
+Electronics,Washing Machine,8-10kg Top Load,,,Connectors,"Copper, Plastic",1 - 3,0.2 - 0.5
+Electronics,Washing Machine,8-10kg Top Load,,,Water Pump,"Plastic, Rubber",3 - 5,2 - 4
+Electronics,Washing Machine,8-10kg Top Load,,,Control Knobs,Plastic,1 - 2,0.5 - 1
+Electronics,Refrigirator,Single Door,,,Compressor,"Steel, Copper",15 - 20,5 - 8
+Electronics,Refrigirator,Single Door,,,Evaporator Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,Single Door,,,Condenser Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,Single Door,,,Insulation Foam,Polyurethane Foam,20 - 30,6 - 10
+Electronics,Refrigirator,Single Door,,,Plastic Housing,ABS Plastic,10 - 15,3 - 5
+Electronics,Refrigirator,Single Door,,,Metal Frame,Galvanized Steel,10 - 20,5 - 8
+Electronics,Refrigirator,Single Door,,,Electronic Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Refrigirator,Single Door,,,Copper Tubing,Copper,2 - 4,1 - 2
+Electronics,Refrigirator,Single Door,,,Door Gasket,PVC/Silicone,1 - 3,0.2 - 0.5
+Electronics,Refrigirator,Double Door,,,Compressor,"Steel, Copper",15 - 20,5 - 8
+Electronics,Refrigirator,Double Door,,,Evaporator Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,Double Door,,,Condenser Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,Double Door,,,Insulation Foam,Polyurethane Foam,20 - 30,6 - 10
+Electronics,Refrigirator,Double Door,,,Plastic Housing,ABS Plastic,10 - 15,3 - 5
+Electronics,Refrigirator,Double Door,,,Metal Frame,Galvanized Steel,10 - 20,5 - 8
+Electronics,Refrigirator,Double Door,,,Electronic Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Refrigirator,Double Door,,,Copper Tubing,Copper,2 - 4,1 - 2
+Electronics,Refrigirator,Double Door,,,Door Gasket,PVC/Silicone,1 - 3,0.2 - 0.5
+Electronics,Refrigirator,Side-by-Side,,,Compressor,"Steel, Copper",15 - 20,5 - 8
+Electronics,Refrigirator,Side-by-Side,,,Evaporator Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,Side-by-Side,,,Condenser Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,Side-by-Side,,,Insulation Foam,Polyurethane Foam,20 - 30,6 - 10
+Electronics,Refrigirator,Side-by-Side,,,Plastic Housing,ABS Plastic,10 - 15,3 - 5
+Electronics,Refrigirator,Side-by-Side,,,Metal Frame,Galvanized Steel,10 - 20,5 - 8
+Electronics,Refrigirator,Side-by-Side,,,Electronic Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Refrigirator,Side-by-Side,,,Copper Tubing,Copper,2 - 4,1 - 2
+Electronics,Refrigirator,Side-by-Side,,,Door Gasket,PVC/Silicone,1 - 3,0.2 - 0.5
+Electronics,Refrigirator,French Door,,,Compressor,"Steel, Copper",15 - 20,5 - 8
+Electronics,Refrigirator,French Door,,,Evaporator Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,French Door,,,Condenser Coil,Aluminum,5 - 10,1 - 2
+Electronics,Refrigirator,French Door,,,Insulation Foam,Polyurethane Foam,20 - 30,6 - 10
+Electronics,Refrigirator,French Door,,,Plastic Housing,ABS Plastic,10 - 15,3 - 5
+Electronics,Refrigirator,French Door,,,Metal Frame,Galvanized Steel,10 - 20,5 - 8
+Electronics,Refrigirator,French Door,,,Electronic Circuit Board,"Silicon, Copper",3 - 5,1 - 2
+Electronics,Refrigirator,French Door,,,Copper Tubing,Copper,2 - 4,1 - 2
+Electronics,Refrigirator,French Door,,,Door Gasket,PVC/Silicone,1 - 3,0.2 - 0.5
